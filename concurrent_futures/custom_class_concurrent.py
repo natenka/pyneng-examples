@@ -13,11 +13,9 @@ class CiscoSSH:
         return self.ssh.send_command(command)
 
     def __enter__(self):
-        print("Вызываю __enter__")
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        print("Вызываю __exit__")
         self.ssh.disconnect()
 
 
