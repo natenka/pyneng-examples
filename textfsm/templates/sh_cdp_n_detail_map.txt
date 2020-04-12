@@ -1,0 +1,10 @@
+Value Filldown local_dev (\S+)
+Value local_port (\S+)
+Value Required neighbor (\S+)
+Value remote_port (\S+)
+
+Start
+  ^${local_dev}[>#]
+  ^Device ID: ${neighbor}
+  ^Interface: ${local_port}, +.+: ${remote_port} -> Record
+

@@ -1,0 +1,15 @@
+Value Filldown local_device (\S+)
+Value Required neighbor (\S+)
+Value ip (\S+)
+Value platform (.+)
+Value local_intf (\S+)
+Value remote_intf (\S+)
+
+Start
+  ^${local_device}[#>]
+  ^Device ID: ${neighbor}
+  ^  IP address: ${ip}
+  ^Platform: ${platform},
+  ^Interface: ${local_intf},  Port ID \(outgoing port\): ${remote_intf}
+  ^Management address -> Record
+
