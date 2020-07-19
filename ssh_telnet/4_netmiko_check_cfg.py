@@ -19,12 +19,22 @@ def cfg_comand(session, section, command):
 
 device_params = {
     "device_type": "cisco_ios",
-    "ip": ip,
-    "username": user,
-    "password": password,
-    "secret": enable_pass,
+    "ip": "192.168.100.1",
+    "username": "cisco",
+    "password": "cisco",
+    "secret": "cisco",
 }
 
-with ConnectHandler(**device_params) as ssh:
-    ssh.enable()
-    cfg_comand(ssh, "interface Loopback55", "ip address 5.5.5.5 255.255.255.255")
+
+def send_cfg_commands(device, section, command):
+    with ConnectHandler(**device_params) as ssh:
+        ssh.enable()
+        output = cfg_comand(ssh, section, command)
+        if output:
+            print(output)
+
+
+if __name__ == "__main__":
+    send_cfg_commands(
+        device_params, "interface Loopback45", "ip address 5.5.5.5 255.255.255.255"
+    )

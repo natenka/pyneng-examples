@@ -1,6 +1,6 @@
 import paramiko
 import time
-import paramiko.ssh_exception
+import socket
 
 
 def send_command_paramiko(ipaddress, username, password, enable_pass, command):
@@ -31,7 +31,7 @@ def send_command_paramiko(ipaddress, username, password, enable_pass, command):
         while True:
             try:
                 page = ssh.recv(5000).decode("ascii")
-            except paramiko.ssh_exception.socket.timeout:
+            except socket.timeout:
                 break
             result += page
             if "More" in page:
@@ -40,10 +40,11 @@ def send_command_paramiko(ipaddress, username, password, enable_pass, command):
     return result
 
 
-command = "sh run"
-user = password = enable_pass = "cisco"
-ip = "192.168.100.1"
+if __name__ == "__main__":
+    command = "sh run"
+    user = password = enable_pass = "cisco"
+    ip = "192.168.100.1"
 
-result = send_command_paramiko(ip, user, password, enable_pass, "sh run")
-with open("result.txt", "w") as f:
-    f.write(result)
+    result = send_command_paramiko(ip, user, password, enable_pass, "sh run")
+    with open("result.txt", "w") as f:
+        f.write(result)

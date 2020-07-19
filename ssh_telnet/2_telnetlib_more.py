@@ -23,7 +23,7 @@ def send_command_telnetlib(ipaddress, username, password, enable_pass, command):
     while True:
         index, match, output = t.expect([b"--More--", b"#"], timeout=5)
         result += output.decode("ascii")
-        if index == 1:
+        if index in (1, -1):
             break
         t.write(b" ")
         time.sleep(1)
