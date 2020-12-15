@@ -1,0 +1,23 @@
+Value Required PSU (\d)
+Value TYPE (\w+)
+Value I_VOLTAGE (\d+.\d+)
+Value I_CURRENT (\d+.\d+)
+Value O_VOLTAGE (\d+.\d+)
+Value O_CURRENT (\d+.\d+)
+
+Start
+  ^\s+ psu ${PSU}
+  ^\s+ type ${TYPE}
+  ^\s+ input { -> Input
+  ^\s+ output { -> Output
+  ^\s+ } -> Record
+
+Input
+  ^\s+ voltage ${I_VOLTAGE}
+  ^\s+ current ${I_CURRENT}
+  ^\s+ } -> Start
+
+Output
+  ^\s+ voltage ${O_VOLTAGE}
+  ^\s+ current ${O_CURRENT}
+  ^\s+ } -> Start

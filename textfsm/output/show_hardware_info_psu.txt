@@ -1,0 +1,25 @@
+psu {
+    psu 1 {
+      type AC
+      input {
+        voltage 229.0 (V)
+        current 2.349 (A)
+      }
+      output {
+        voltage 12.0 (V)
+        current 41.667 (A)
+      }
+    }
+    psu 2 {
+      type AC
+      input {
+        voltage 230.0 (V)
+        current 2.339 (A)
+      }
+      output {
+        voltage 12.0 (V)
+        current 41.667 (A)
+      }
+    }
+   }
+
