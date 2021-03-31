@@ -7,6 +7,7 @@ r1 = {
     "auth_secondary": "cisco",
     "auth_strict_key": False,
     "platform": "cisco_iosxe",
+    # "transport": "paramiko",
 }
 
 
