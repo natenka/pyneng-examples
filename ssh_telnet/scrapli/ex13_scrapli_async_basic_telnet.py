@@ -7,7 +7,8 @@ r1 = {
     "auth_password": "cisco",
     "auth_secondary": "cisco",
     "auth_strict_key": False,
-    "transport": "asyncssh",
+    "transport": "asynctelnet",
+    "port": 23,
 }
 
 async def send_show(device, command):
@@ -20,3 +21,5 @@ if __name__ == "__main__":
     output = asyncio.run(send_show(r1, "show ip int br"))
     print(output)
 
+# An open stream object is being garbage collected; call "stream.close()" explicitly.
+# asyncio problem
