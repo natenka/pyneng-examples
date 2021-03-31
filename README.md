@@ -16,18 +16,7 @@
 * generator
 * logging - модуль logging
 * misc - все что не попало в какую-то конкретную тему
-* oop:
-
-  * abc_class - абстрактные классы
-  * basic_class - основы ООП
-  * classmethod - примеры использования classmethod
-  * inheritance - примеры использования наследования
-  * magic_methods - специальные методы
-  * mixin_class - Mixin'ы
-  * namedtuple_class - Именованный кортеж
-  * property - примеры использования property
-  * staticmethod
-
+* oop - основы, специальные методы, property и т.д.
 * package - пример Python package
 * regex - примеры использования регулярных выражений для обработки вывода show команд
 * ssh_telnet - модуля для подключения Telnet/SSH
