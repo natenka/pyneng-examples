@@ -3,7 +3,6 @@
   username: cisco
   password: cisco
   secret: cisco
-  timeout: 10
 - device_type: cisco_ios
   host: 192.168.100.2
   username: cisco
