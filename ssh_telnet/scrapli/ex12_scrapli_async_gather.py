@@ -22,6 +22,9 @@ if __name__ == "__main__":
         "auth_secondary": "cisco",
         "auth_strict_key": False,
         "transport": "asyncssh",
+        # "transport_options": {"encryption_algs": "+aes128-cbc,aes256-cbc"},
+        # ~/venv/pyneng-py3-8-0/lib/python3.8/site-packages/scrapli/transport/plugins/asyncssh/transport.py
+        # 118 line: encryption_algs="+aes128-cbc,aes256-cbc",
     }
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
     devices = [{"host": ip, **common_params} for ip in ip_list]
