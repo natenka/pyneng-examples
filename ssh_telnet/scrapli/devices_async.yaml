@@ -1,18 +1,18 @@
-- platform: cisco_iosxe
-  host: 192.168.100.1
+- host: 192.168.100.1
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
-- platform: cisco_iosxe
-  host: 192.168.100.2
+  transport: asyncssh
+- host: 192.168.100.2
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
-- platform: cisco_iosxe
-  host: 192.168.100.3
+  transport: asyncssh
+- host: 192.168.100.3
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
+  transport: asyncssh
