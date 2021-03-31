@@ -12,6 +12,8 @@
 
 > Все примеры показаны на Cisco IOS.
 
+В каждом каталоге есть файл README с полезными ссылками по теме.
+
 * asyncio - основы asyncio, модули для подключения Telnet/SSH/HTTP(S), работа с asyncio
 * cli_interface - модули для создания интерфейса командной строки: click, typer, argparse
 * concurrent_futures - параллельное подключение к оборудованию с помощью модуля concurrent.futures
