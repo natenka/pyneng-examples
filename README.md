@@ -14,7 +14,6 @@
 * data_classes
 * decorator
 * generator
-* jinja2 - примеры шаблонов Jinja2 и примеры использования Jinja2 в Python
 * logging - модуль logging
 * misc - все что не попало в какую-то конкретную тему
 * oop:
