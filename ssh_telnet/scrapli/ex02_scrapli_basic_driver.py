@@ -6,7 +6,8 @@ r1 = {
     "auth_password": "cisco",
     "auth_secondary": "cisco",
     "auth_strict_key": False,
-    # "transport": "paramiko",
+    "transport": "telnet",
+    "port": 23,
 }
 
 
