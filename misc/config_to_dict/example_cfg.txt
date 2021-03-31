@@ -1,0 +1,87 @@
+hostname Liverpool
+!
+interface Loopback10
+ description MPLS loopback
+ ip address 10.10.11.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+ description WAN to Liverpool sw1 G0/1
+!
+interface GigabitEthernet0/0.1111
+ description MPLS to LONDON
+ encapsulation dot1Q 1111
+ ip address 10.11.1.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf hello-interval 1
+ ip ospf cost 10
+!
+interface GigabitEthernet0/1
+ description LAN Liverpool to sw1 G0/2
+!
+interface GigabitEthernet0/1.791
+ description PW IT Liverpool - LONDON
+ encapsulation dot1Q 791
+ xconnect 10.10.1.1 1111 encapsulation mpls
+  backup peer 10.10.1.2 1121
+  backup delay 1 1
+!
+interface GigabitEthernet0/1.1550
+ description PW BS Liverpool - LONDON
+ encapsulation dot1Q 1550
+ xconnect 10.10.1.1 11111 encapsulation mpls
+  backup peer 10.10.1.2 11121
+  backup delay 1 1
+ ip rsvp bandwidth
+ bandwidth 100000
+!
+router ospf 10
+ router-id 10.10.11.1
+ auto-cost reference-bandwidth 10000
+ network 10.0.0.0 0.255.255.255 area 0
+!
+!
+interface Ethernet0/3.100
+ encapsulation dot1Q 100
+ xconnect 10.2.2.2 12100 encapsulation mpls
+  backup peer 10.4.4.4 14100
+   backup delay 1 1
+ ip rsvp bandwidth
+ bandwidth 100000
+!
+!
+interface Ethernet0/13.200
+ encapsulation dot1Q 100
+ xconnect 10.2.2.2 12100 encapsulation mpls
+  backup peer 10.4.4.4 14100
+   backup delay 1 1
+  ip rsvp bandwidth
+ bandwidth 100000
+!
+!
+!
+control-plane
+ management-plane
+  inband
+   interface all
+    allow SNMP
+    allow SNMP peer
+     address ipv4 111.21.93.118
+     address ipv4 166.67.56.25
+    !
+    allow TFTP peer
+     address ipv4 156.14.50.1
+     address ipv4 156.14.50.9
+     address ipv4 78.21.106.0/24
+    !
+    allow Telnet peer
+     address ipv4 66.141.157.124
+     address ipv4 66.179.135.66
+     address ipv4 78.254.10.204
+    !
+   !
+  !
+ !
+!
+!
+!
+!
