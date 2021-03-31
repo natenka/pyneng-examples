@@ -11,6 +11,7 @@ r1 = {
     "port": 23,
 }
 
+
 async def send_show(device, command):
     async with AsyncIOSXEDriver(**device) as conn:
         result = await conn.send_command(command)

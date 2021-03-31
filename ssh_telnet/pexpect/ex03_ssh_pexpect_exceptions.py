@@ -5,7 +5,9 @@ import pexpect
 def cisco_send_show_commands(host, username, password, enable_pass, commands):
     print(f"Подключаюсь {host}")
     try:
-        with pexpect.spawn(f"ssh {username}@{host}", timeout=10, encoding="utf-8") as ssh:
+        with pexpect.spawn(
+            f"ssh {username}@{host}", timeout=10, encoding="utf-8"
+        ) as ssh:
             ssh.expect("[Pp]assword")
             ssh.sendline(password)
             enable_mode = ssh.expect([">", "#"])
@@ -44,4 +46,3 @@ if __name__ == "__main__":
             ip, "cisco", password, "cisco", ["sh clock", "sh int desc"]
         )
         pprint(out)
-

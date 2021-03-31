@@ -10,6 +10,7 @@ r1 = {
     "transport": "asyncssh",
 }
 
+
 async def send_show(device, command):
     async with AsyncIOSXEDriver(**device) as conn:
         result = await conn.send_command(command)
@@ -19,4 +20,3 @@ async def send_show(device, command):
 if __name__ == "__main__":
     output = asyncio.run(send_show(r1, "show ip int br"))
     print(output)
-

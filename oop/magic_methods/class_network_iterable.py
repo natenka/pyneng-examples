@@ -10,4 +10,3 @@ class Network:
     def __iter__(self):
         print("вызываю __iter__")
         return iter(self.hosts)
-

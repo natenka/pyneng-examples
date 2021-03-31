@@ -20,8 +20,7 @@ async def connect_ssh(device, command):
 
 async def send_command_to_devices(devices, command, max_time=8):
     cancelled = []
-    tasks = [asyncio.create_task(connect_ssh(device, command))
-             for device in devices]
+    tasks = [asyncio.create_task(connect_ssh(device, command)) for device in devices]
     done, pending = await asyncio.wait(tasks, timeout=max_time)
     if pending:
         print(f"После {max_time} остались такие задачи")

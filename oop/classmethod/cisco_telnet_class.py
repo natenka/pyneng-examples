@@ -35,14 +35,11 @@ class CiscoTelnet:
         return f"<CiscoTelnet ip={self.ip}>"
 
     @staticmethod
-    def _parse_show(
-        command, command_output, index_file='index', templates='templates'
-    ):
-        attributes = {'Command': command}
+    def _parse_show(command, command_output, index_file="index", templates="templates"):
+        attributes = {"Command": command}
         cli_table = clitable.CliTable(index_file, templates)
         cli_table.ParseCmd(command_output, attributes)
         return [dict(zip(cli_table.header, row)) for row in cli_table]
-
 
     @classmethod
     def prompt_params(cls, ip):
@@ -75,7 +72,6 @@ class CiscoTelnet:
             )
             self._mngmt_ip = new_ip
 
-
     def send_show_command(self, command):
         log.debug(f"Отправка команды {command} на {self.ip}")
         self._telnet.write(command.encode("utf-8") + b"\n")
@@ -94,7 +90,6 @@ class CiscoTelnet:
             output += self._telnet.read_until(b"#").decode("utf-8")
         return output
 
-
     def close(self):
         self._telnet.close()
 
@@ -105,4 +100,3 @@ class CiscoTelnet:
     def __exit__(self, exc_type, exc_val, exc_tb):
         print("__exit__")
         self._telnet.close()
-

@@ -1,7 +1,9 @@
 import netmiko
-print('Import cisco_connect/ssh.py')
 
-__all__ = ['CiscoSSH']
+print("Import cisco_connect/ssh.py")
+
+__all__ = ["CiscoSSH"]
+
 
 class CiscoSSH:
     def __init__(self, **device_params):

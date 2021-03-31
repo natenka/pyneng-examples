@@ -36,4 +36,3 @@ if __name__ == "__main__":
             ip, "cisco", "cisco", "cisco", ["sh clock", "sh int desc"]
         )
         pprint(out)
-

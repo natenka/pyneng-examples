@@ -54,6 +54,7 @@ async def filter_data():
     async for item in nexthop_45_mask_22:
         print(item)
 
+
 async def main():
     task1 = asyncio.create_task(filter_data())
     task2 = asyncio.create_task(dummy())
@@ -63,4 +64,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

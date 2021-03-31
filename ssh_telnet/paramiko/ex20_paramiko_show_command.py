@@ -4,8 +4,7 @@ from pprint import pprint
 
 
 def cisco_send_show_command(
-    host, username, password, enable_pass, command, max_read=60000,
-    pause=0.5
+    host, username, password, enable_pass, command, max_read=60000, pause=0.5
 ):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -35,9 +34,7 @@ if __name__ == "__main__":
     result = {}
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
     for ip in ip_list:
-        out = cisco_send_show_command(
-            ip, "cisco", "cisco", "cisco", "ping 8.8.8.8"
-        )
+        out = cisco_send_show_command(ip, "cisco", "cisco", "cisco", "ping 8.8.8.8")
         result[ip] = out
         break
     pprint(result)

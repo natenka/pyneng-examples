@@ -17,16 +17,17 @@ async def connect_ssh(device, command, semaphore):
 
 async def func(semaphore):
     async with semaphore:
-        print('>>>')
+        print(">>>")
         await asyncio.sleep(0.5)
-        print('<<<')
+        print("<<<")
+
 
 async def send_command_to_devices(devices, command, max_workers=1):
     sem = asyncio.Semaphore(5)
     coroutines = [connect_ssh(device, command, sem) for device in devices]
     sem2 = asyncio.Semaphore(5)
     coroutines2 = [func(sem2) for _ in range(10)]
-    result = await asyncio.gather(*coroutines+coroutines2)
+    result = await asyncio.gather(*coroutines + coroutines2)
     return result
 
 

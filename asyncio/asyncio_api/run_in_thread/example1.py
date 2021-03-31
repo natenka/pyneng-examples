@@ -33,9 +33,7 @@ async def send_command_to_devices(devices, command):
     tasks = []
     for device in devices:
         if device["host"] in netmiko_only:
-            task = loop.run_in_executor(
-                executor, connect_ssh_netmiko, device, command
-            )
+            task = loop.run_in_executor(executor, connect_ssh_netmiko, device, command)
             tasks.append(task)
         else:
             task = asyncio.create_task(connect_ssh(device, command))

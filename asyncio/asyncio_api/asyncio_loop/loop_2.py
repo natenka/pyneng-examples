@@ -29,12 +29,11 @@ async def send_command_to_devices(devices, command):
         result = await asyncio.gather(*tasks, return_exceptions=True)
         return result
     except asyncio.CancelledError:
-        print(f'### Отменена send_command_to_devices')
+        print(f"### Отменена send_command_to_devices")
 
 
 async def shutdown():
-    tasks = [task for task in asyncio.all_tasks()
-             if task is not asyncio.current_task()]
+    tasks = [task for task in asyncio.all_tasks() if task is not asyncio.current_task()]
     for task in tasks:
         task.cancel()
     results = await asyncio.gather(*tasks, return_exceptions=True)

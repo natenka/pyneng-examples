@@ -27,4 +27,3 @@ if __name__ == "__main__":
     devices = [{"host": ip, **common_params} for ip in ip_list]
     result = asyncio.run(send_command_to_devices(devices, "sh ip int br"))
     pprint(result, width=120)
-

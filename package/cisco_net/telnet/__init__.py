@@ -1,1 +1,1 @@
-print('telnet __init__')
+print("telnet __init__")

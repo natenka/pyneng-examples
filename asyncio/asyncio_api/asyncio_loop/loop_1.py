@@ -29,7 +29,7 @@ async def send_command_to_devices(devices, command):
         result = await asyncio.gather(*tasks, return_exceptions=True)
         return result
     except asyncio.CancelledError:
-        print(f'### Отменена send_command_to_devices')
+        print(f"### Отменена send_command_to_devices")
 
 
 if __name__ == "__main__":

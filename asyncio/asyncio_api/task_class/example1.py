@@ -15,12 +15,12 @@ async def main():
     task2 = Task(coro("coro2"), name="task2")
     await task1
     await task2
-    #print(task1, task2)
+    # print(task1, task2)
 
 
 asyncio.run(main())
 
-'''
+"""
 Task task1 __init__
 Task task1 _step
 >> Start coro1
@@ -31,4 +31,4 @@ Task task1 _wakeup
 Task task1 _step
 >> End coro1
 
-'''
+"""

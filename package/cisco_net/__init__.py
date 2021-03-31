@@ -1,4 +1,4 @@
-print('__init__')
+print("__init__")
 
 from .ssh.ssh_func import *
 from cisco_net.telnet.telnet_func import *

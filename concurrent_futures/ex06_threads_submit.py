@@ -15,14 +15,13 @@ logging.getLogger("paramiko").setLevel(logging.WARNING)
 logging.getLogger("netmiko").setLevel(logging.WARNING)
 
 logging.basicConfig(
-    format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
-    level=logging.INFO
+    format="%(threadName)s %(name)s %(levelname)s: %(message)s", level=logging.INFO
 )
 
 
 def send_show_command(device, show):
     print(threading.current_thread())
-    ip = device['host']
+    ip = device["host"]
     logging.info(f">>> Подключаюсь к {ip}")
     try:
         with netmiko.ConnectHandler(**device) as ssh:
@@ -36,7 +35,6 @@ def send_show_command(device, show):
         print(f"Не удалось подключиться к {device['host']}")
     except paramiko.ssh_exception.AuthenticationException:
         print(f"Ошибка аутентификации с {device['host']}")
-
 
 
 def send_show_to_devices(devices, command):
@@ -55,7 +53,7 @@ def send_show_to_devices(devices, command):
 
 
 if __name__ == "__main__":
-    with open('devices.yaml') as f:
+    with open("devices.yaml") as f:
         devices = yaml.safe_load(f)
     r = send_show_to_devices(devices, "sh clock")
     pprint(r)

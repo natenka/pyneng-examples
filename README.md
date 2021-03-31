@@ -14,6 +14,12 @@
 
 В каждом каталоге есть файл README с полезными ссылками по теме.
 
+## Версия Python
+
+Все примеры писались и проверялись для Python 3.8. Форматирование black.
+
+## Темы
+
 * asyncio - основы asyncio, модули для подключения Telnet/SSH/HTTP(S), работа с asyncio
 * cli_interface - модули для создания интерфейса командной строки: click, typer, argparse
 * concurrent_futures - параллельное подключение к оборудованию с помощью модуля concurrent.futures

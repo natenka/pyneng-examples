@@ -8,13 +8,25 @@ from colorama import Fore, init
 
 
 # Ignore command which contains words
-ignore = ['---', '+++', '@@', '-^C', '+^C', '*********',
-          'duplex', 'description', 'version 15',
-          'ipv6', 'sh run',
-          'Current configuration', 'Building configuration',
-          'aqm-register-fnf',
-          'clock timezone',
-          'vlan internal allocation', 'banner motd']
+ignore = [
+    "---",
+    "+++",
+    "@@",
+    "-^C",
+    "+^C",
+    "*********",
+    "duplex",
+    "description",
+    "version 15",
+    "ipv6",
+    "sh run",
+    "Current configuration",
+    "Building configuration",
+    "aqm-register-fnf",
+    "clock timezone",
+    "vlan internal allocation",
+    "banner motd",
+]
 
 
 def clean_config(config):
@@ -24,16 +36,18 @@ def clean_config(config):
     Return config as a list
     """
     with open(config) as cfg:
-        clean_cfg = [line.rstrip() for line in cfg
-                     if not '!' in line[:3]
-                        and line.rstrip()
-                        and not ignore_command(line, ignore)]
+        clean_cfg = [
+            line.rstrip()
+            for line in cfg
+            if not "!" in line[:3]
+            and line.rstrip()
+            and not ignore_command(line, ignore)
+        ]
     return clean_cfg
 
 
 def clean_diff(diff_generator):
-    return (line for line in diff_generator
-            if not ignore_command(line, ignore))
+    return (line for line in diff_generator if not ignore_command(line, ignore))
 
 
 def make_diff(base_cfg_commands, check_cfg_commands):
@@ -64,8 +78,10 @@ def child_is_flat(children, level=1):
     level - integer, current level of depth.
     Returns True if all children in the same level, False otherwise.
     """
-    return all(len(child) <= level+1 or child[(level+1):][0].isalpha()
-               for child in children)
+    return all(
+        len(child) <= level + 1 or child[(level + 1) :][0].isalpha()
+        for child in children
+    )
 
 
 def all_children_flat(section_dict, level):
@@ -75,11 +91,10 @@ def all_children_flat(section_dict, level):
     * level - integer, current level of depth.
     Returns True if all children in all sections is in the same level, False otherwise.
     """
-    return all(child_is_flat(children, level)
-               for children in section_dict.values())
+    return all(child_is_flat(children, level) for children in section_dict.values())
 
 
-def parse_cfg_section(section,level=1):
+def parse_cfg_section(section, level=1):
     """
     Function parse section of config.
     In result only sections with changed children returned.
@@ -88,7 +103,7 @@ def parse_cfg_section(section,level=1):
     Returns dictionary with section header as a keys,
     and a list of commands as a value.
     """
-    current_section = ''
+    current_section = ""
     section_children = []
     changed = False
     section_dict = odict()
@@ -103,15 +118,15 @@ def parse_cfg_section(section,level=1):
                     changed = False
                 current_section = command
             else:
-               section_children.append(command)
-        if command[0] in ['-','+']:
+                section_children.append(command)
+        if command[0] in ["-", "+"]:
             changed = True
     if changed:
         section_dict[current_section] = section_children
     return section_dict
 
 
-def parse_config(section,level=1):
+def parse_config(section, level=1):
     """
     Function recursively parse config file.
     Return:
@@ -125,13 +140,13 @@ def parse_config(section,level=1):
         level += 1
         for key, children in section_dict.items():
             if not child_is_flat(children):
-                s_dict, all_flat = parse_config(children,level)
+                s_dict, all_flat = parse_config(children, level)
                 if s_dict:
                     section_dict[key] = s_dict
     return section_dict, all_flat
 
 
-def yield_lines_from_diff_dict(parced_diff_dict, level = 0):
+def yield_lines_from_diff_dict(parced_diff_dict, level=0):
     """
     Function converts difference dictionary to list.
     * parced_diff_dict - dictionary, result of parse_config function.
@@ -140,7 +155,7 @@ def yield_lines_from_diff_dict(parced_diff_dict, level = 0):
     """
     for key, value in parced_diff_dict.items():
         if level == 0:
-            yield '\n'
+            yield "\n"
             yield key
         else:
             yield key
@@ -168,52 +183,62 @@ def main(base_config, config_to_check):
 
 
 def print_colored_diff(diff_generator):
-    #turn off color changes at the end of every print
+    # turn off color changes at the end of every print
     init(autoreset=True)
 
     for line in result:
-        if line.startswith('-'):
-            print(Fore.RED+line)
-        elif line.startswith('+'):
-            print(Fore.GREEN+line)
+        if line.startswith("-"):
+            print(Fore.RED + line)
+        elif line.startswith("+"):
+            print(Fore.GREEN + line)
         else:
             print(line)
 
 
 def generate_html(data, template, dest_file):
 
-    env = Environment(loader=FileSystemLoader('templates'),
-                      trim_blocks=True, lstrip_blocks=True)
+    env = Environment(
+        loader=FileSystemLoader("templates"), trim_blocks=True, lstrip_blocks=True
+    )
     template = env.get_template(template)
 
-    with open(dest_file, 'w') as output:
+    with open(dest_file, "w") as output:
         output.write(template.render(diff=data))
-    print('HTML output saved to', dest_file)
+    print("HTML output saved to", dest_file)
 
 
-parser = argparse.ArgumentParser(description='Generate config diff')
+parser = argparse.ArgumentParser(description="Generate config diff")
 
-parser.add_argument('base_cfg_file', action="store")
-parser.add_argument('check_cfg_file', action="store")
-parser.add_argument('-f', action="store", dest="format",
-                    choices=['html', 'print'], default='print',
-                    help="Output format")
-parser.add_argument('-d', action="store", dest="html_dst_file",
-                    default='result.html', help="HTML destination file")
+parser.add_argument("base_cfg_file", action="store")
+parser.add_argument("check_cfg_file", action="store")
+parser.add_argument(
+    "-f",
+    action="store",
+    dest="format",
+    choices=["html", "print"],
+    default="print",
+    help="Output format",
+)
+parser.add_argument(
+    "-d",
+    action="store",
+    dest="html_dst_file",
+    default="result.html",
+    help="HTML destination file",
+)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = parser.parse_args()
     base_cfg, cfg_to_check = args.base_cfg_file, args.check_cfg_file
     result = main(base_cfg, cfg_to_check)
-    if args.format == 'print':
+    if args.format == "print":
         print_colored_diff(result)
     else:
-        generate_html(result, 'html_report_template.html',
-                      args.html_dst_file)
+        generate_html(result, "html_report_template.html", args.html_dst_file)
 
 
-'''
+"""
 
 $ python generate_cfg_diff.py base_cfg.txt cfg1.txt -h
 usage: generate_cfg_diff.py [-h] [-f {html,print}] [-d HTML_DST_FILE]
@@ -256,4 +281,4 @@ $ python generate_cfg_diff.py base_cfg.txt cfg1.txt
 $ python generate_cfg_diff.py base_cfg.txt cfg1.txt -f html
 HTML output saved to result.html
 
-'''
+"""

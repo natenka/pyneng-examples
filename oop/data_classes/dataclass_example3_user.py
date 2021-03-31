@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import List
 from datetime import datetime
 
+
 class AccessDenied(Exception):
     pass
 
@@ -37,5 +38,3 @@ def login(user):
 u1 = User("user1", "password1", user)
 u2 = User("user2", "password1", user)
 u3 = User("user3", "password3", admin)
-
-

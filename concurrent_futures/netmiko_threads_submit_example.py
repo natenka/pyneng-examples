@@ -52,9 +52,14 @@ def send_show_command_to_devices(devices, commands, limit=5):
 
 
 if __name__ == "__main__":
-    commands = ["sh ip int br", "sh arp", "sh version", "sh ip int br | ex un",
-                "sh run | i interface", "sh vers | i IOS"]
+    commands = [
+        "sh ip int br",
+        "sh arp",
+        "sh version",
+        "sh ip int br | ex un",
+        "sh run | i interface",
+        "sh vers | i IOS",
+    ]
     with open("devices.yaml") as f:
         devices = yaml.load(f)
     send_show_command_to_devices(devices, commands)
-

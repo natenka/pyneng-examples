@@ -17,7 +17,7 @@ class Task(asyncio.futures.Future):
                 # don't have `__iter__` and `__next__` methods.
                 future = self.coro.send(None)
             else:
-                future = self.coro.throw(exc) #coroutine coro
+                future = self.coro.throw(exc)  # coroutine coro
         except StopIteration as error:
             self.set_result(error.value)
         except Exception as error:

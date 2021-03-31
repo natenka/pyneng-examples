@@ -14,7 +14,6 @@ class IPAddress(NamedTuple):
         return self.to_int() < other.to_int()
 
 
-
 ip1 = IPAddress("10.1.1.1", 24)
 ip2 = IPAddress("10.10.1.2", 24)
 ip3 = IPAddress("10.11.1.3", 24)

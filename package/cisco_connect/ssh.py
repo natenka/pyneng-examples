@@ -1,9 +1,10 @@
-print('ssh')
+print("ssh")
 
 import netmiko
 
 
-__all__ = ['CiscoSSH', 'parse_data']
+__all__ = ["CiscoSSH", "parse_data"]
+
 
 class CiscoSSH:
     def __init__(self, **device_params):
@@ -20,4 +21,3 @@ def parse_data():
 
 def error_check():
     pass
-

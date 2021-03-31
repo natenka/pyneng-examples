@@ -4,8 +4,13 @@ import click
 
 
 def cisco_cfg_device(
-    host, username, password, enable_pass,
-    cfg_commands, check_cmd=None, check_str=None,
+    host,
+    username,
+    password,
+    enable_pass,
+    cfg_commands,
+    check_cmd=None,
+    check_str=None,
 ):
     print(f"Подключаюсь {host}")
     with pexpect.spawn(f"ssh {username}@{host}", timeout=10, encoding="utf-8") as ssh:
@@ -22,7 +27,7 @@ def cisco_cfg_device(
         ssh.expect("#")
 
         ssh.sendline("conf t")
-        #ssh.expect("\S+config\S+#")
+        # ssh.expect("\S+config\S+#")
         ssh.expect("#")
         result = ssh.before + ssh.after
         for cmd in cfg_commands:
@@ -30,9 +35,7 @@ def cisco_cfg_device(
             ssh.expect("#")
             output = ssh.before + ssh.after
             if "%" in output:
-                click.secho(
-                    f"При выполнении команды {cmd} возникла ошибка", fg="red"
-                )
+                click.secho(f"При выполнении команды {cmd} возникла ошибка", fg="red")
                 # print(output)
             result += output.replace("\r\n", "\n")
         ssh.sendline("end")
@@ -53,10 +56,13 @@ if __name__ == "__main__":
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
     for ip in ip_list:
         out = cisco_cfg_device(
-            ip, "cisco", "cisco", "cisco",
+            ip,
+            "cisco",
+            "cisco",
+            "cisco",
             ["router ospf 1", "network 0.0.0.0 255.255.255.255 area 0"],
-            check_cmd="sh ip ospf", check_str="Routing Process"
+            check_cmd="sh ip ospf",
+            check_str="Routing Process",
         )
         pprint(out)
         break
-

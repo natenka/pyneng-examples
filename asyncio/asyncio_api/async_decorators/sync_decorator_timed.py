@@ -9,14 +9,15 @@ def timed(func):
         result = await func(*args, **kwargs)
         print(f"Время выполнения {datetime.now() - start}")
         return result
+
     return wrapper
 
 
-#f = timed(f)
+# f = timed(f)
 @timed
 async def f():
     await asyncio.sleep(5)
 
 
 if __name__ == "__main__":
-    asyncio.run(f()) # wrapped()
+    asyncio.run(f())  # wrapped()

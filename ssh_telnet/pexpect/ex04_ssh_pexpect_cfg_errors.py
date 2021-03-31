@@ -37,9 +37,11 @@ if __name__ == "__main__":
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
     for ip in ip_list:
         out = cisco_cfg_device(
-            ip, "cisco", "cisco", "cisco",
-            ["int lo200", "ip address 10.2.2.2 255.255.255.255"]
+            ip,
+            "cisco",
+            "cisco",
+            "cisco",
+            ["int lo200", "ip address 10.2.2.2 255.255.255.255"],
         )
         pprint(out)
         break
-

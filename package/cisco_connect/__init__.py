@@ -1,9 +1,8 @@
-print('__init__')
+print("__init__")
 
 
-
-from .ssh import * #relative
-from cisco_connect.telnet import CiscoTelnet #absolut
+from .ssh import *  # relative
+from cisco_connect.telnet import CiscoTelnet  # absolut
 
 a = 10
 

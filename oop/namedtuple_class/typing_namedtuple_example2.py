@@ -11,7 +11,6 @@ class NetworkDevice(NamedTuple):
         print(f"Device: {self.hostname}")
 
 
-
 r1 = NetworkDevice("r1", "15.4", "Cisco", "10.1.1.1")
 r2 = NetworkDevice("r2", "12.4", "Cisco", "10.1.1.2")
 r3 = NetworkDevice("r3", "15.6", "Cisco", "10.1.1.3")

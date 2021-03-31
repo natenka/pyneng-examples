@@ -3,13 +3,17 @@ from itertools import chain
 import sys
 
 
-
 # Ignore command which contains words
-ignore = ['ipv6', 'sh run',
-          'Current configuration', 'Building configuration',
-          'aqm-register-fnf',
-          'clock timezone',
-          'vlan internal allocation', 'banner motd']
+ignore = [
+    "ipv6",
+    "sh run",
+    "Current configuration",
+    "Building configuration",
+    "aqm-register-fnf",
+    "clock timezone",
+    "vlan internal allocation",
+    "banner motd",
+]
 
 
 def clean_config(config):
@@ -19,10 +23,13 @@ def clean_config(config):
     Return config as a list
     """
     with open(config) as cfg:
-        clean_cfg = [line.rstrip() for line in cfg
-                     if not line.strip().startswith('!')
-                        and line.rstrip()
-                        and not ignore_command(line, ignore)]
+        clean_cfg = [
+            line.rstrip()
+            for line in cfg
+            if not line.strip().startswith("!")
+            and line.rstrip()
+            and not ignore_command(line, ignore)
+        ]
     return clean_cfg
 
 
@@ -45,7 +52,7 @@ def all_children_flat(section, level):
     result = []
     for child in section:
         try:
-            is_alpha = child[(LEVELQ*level+1):][0].isalpha()
+            is_alpha = child[(LEVELQ * level + 1) :][0].isalpha()
             result.append(is_alpha)
         except IndexError:
             print(child)
@@ -62,7 +69,7 @@ def takewhile_partition(predicate, iterable):
     1. все что попало пока выполнялся predicate (список)
     2. все остальное (итератор)
     """
-    x = ''
+    x = ""
     items_iterator = iter(iterable)
     items_before = []
 
@@ -87,13 +94,16 @@ def parse_cfg_to_sections(config, level=0):
         except StopIteration:
             break
         try:
-            if line[LEVELQ*level].isalnum():
+            if line[LEVELQ * level].isalnum():
                 section = line
                 section_content, config = takewhile_partition(
-                    lambda line: not line[LEVELQ*level].isalpha(), config)
+                    lambda line: not line[LEVELQ * level].isalpha(), config
+                )
                 if section_content and not all_children_flat(section_content, level):
                     # рекурсивный вызов
-                    section_content = parse_cfg_to_sections(iter(section_content), level+1)
+                    section_content = parse_cfg_to_sections(
+                        iter(section_content), level + 1
+                    )
                 config_dict[section] = section_content
         except IndexError:
             break
@@ -125,9 +135,9 @@ def parse_config(filename):
 if __name__ == "__main__":
     # сколько пробелов используется для отступа
     LEVELQ = 2
-    result = parse_config('example_cfg_2.txt')
+    result = parse_config("example_cfg_2.txt")
     pprint(result, width=140)
 
     LEVELQ = 1
-    result = parse_config('example_cfg.txt')
+    result = parse_config("example_cfg.txt")
     pprint(result, width=140)

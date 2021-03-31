@@ -35,8 +35,6 @@ def cisco_send_show_command(host, username, password, enable_pass, command):
 
 if __name__ == "__main__":
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    out = cisco_send_show_command(
-        ip_list[0], "cisco", "cisco", "cisco", "sh run"
-    )
+    out = cisco_send_show_command(ip_list[0], "cisco", "cisco", "cisco", "sh run")
     with open("result_r1.txt", "w") as f:
         f.write(out)

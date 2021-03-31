@@ -19,6 +19,7 @@ def send_command_to_cisco_devices(device_list, command):
             result[ip] = send_show_command(device, command)
     return result
 
+
 @click.command()
 @click.argument("command")
 @click.option("--device-params", type=click.File("r"), required=True)
@@ -28,6 +29,7 @@ def cli(command, device_params, output_file):
     devices = yaml.safe_load(device_params)
     result = send_command_to_cisco_devices(devices, command)
     yaml.dump(result, output_file)
+
 
 if __name__ == "__main__":
     cli()

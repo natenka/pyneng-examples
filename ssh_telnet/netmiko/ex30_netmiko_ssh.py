@@ -21,7 +21,6 @@ def send_show(device, commands):
         print(f"Ошибка аутентификации с {device['host']}")
 
 
-
 if __name__ == "__main__":
     with open("devices.yaml") as f:
         devices = yaml.safe_load(f)

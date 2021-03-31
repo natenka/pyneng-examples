@@ -6,7 +6,12 @@ import re
 
 
 def cisco_send_show_commands(
-    host, username, password, enable_pass, commands, max_read=60000,
+    host,
+    username,
+    password,
+    enable_pass,
+    commands,
+    max_read=60000,
     pause=0.5,
 ):
     client = paramiko.SSHClient()
@@ -59,6 +64,7 @@ def read_until_prompt(ssh, prompt, pause=0.2, max_read=60000):
 def call_ipython(**kwargs):
     from IPython import embed
     from traitlets.config import get_config
+
     c = get_config()
     c.InteractiveShellEmbed.colors = "Linux"
     embed(config=c)
@@ -70,5 +76,5 @@ if __name__ == "__main__":
         out = cisco_send_show_commands(
             ip, "cisco", "cisco", "cisco", ["sh ip int br", "sh clock"]
         )
-        #pprint(out)
+        # pprint(out)
         break

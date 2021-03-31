@@ -14,8 +14,7 @@ logging.getLogger("paramiko").setLevel(logging.WARNING)
 logging.getLogger("netmiko").setLevel(logging.WARNING)
 
 logging.basicConfig(
-    format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
-    level=logging.INFO
+    format="%(threadName)s %(name)s %(levelname)s: %(message)s", level=logging.INFO
 )
 
 
@@ -47,7 +46,7 @@ def parse_sh_ip_int_br(output):
 
 
 def send_show_command(device, show):
-    host = device['host']
+    host = device["host"]
     logging.info(f">>> Подключаюсь к {host}")
     with netmiko.ConnectHandler(**device) as ssh:
         ssh.enable()
@@ -62,19 +61,17 @@ def send_and_parse_command(devices, command, parse_function, threads=10):
     logging.info(f"### Начало работы с потоками")
     result_dict = {}
     with ThreadPoolExecutor(max_workers=threads) as executor:
-        results = executor.map(
-            send_show_command, devices, repeat(command)
-        )
+        results = executor.map(send_show_command, devices, repeat(command))
         logging.info(f"### Все функции запущены")
         for dev, output in zip(devices, results):
-            host = dev['host']
+            host = dev["host"]
             result_dict[host] = parse_function(output)
     logging.info("### Все потоки отработали")
     return result_dict
 
 
 if __name__ == "__main__":
-    with open('devices.yaml') as f:
+    with open("devices.yaml") as f:
         devices = yaml.safe_load(f)
     r = send_and_parse_command(devices, "sh ip int br", parse_sh_ip_int_br)
     pprint(r)

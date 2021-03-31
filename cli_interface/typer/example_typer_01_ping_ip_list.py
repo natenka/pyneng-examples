@@ -34,4 +34,3 @@ def main(ip_addresses: List[str], count: int):
 
 if __name__ == "__main__":
     typer.run(main)
-

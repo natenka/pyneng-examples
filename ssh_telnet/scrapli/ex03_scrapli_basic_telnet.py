@@ -7,7 +7,7 @@ r1 = {
     "auth_secondary": "cisco",
     "auth_strict_key": False,
     "transport": "telnet",
-    "port": 23, # обязательно указывать при подключении telnet
+    "port": 23,  # обязательно указывать при подключении telnet
 }
 
 

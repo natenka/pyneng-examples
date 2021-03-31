@@ -1,6 +1,7 @@
 import subprocess
 import argparse
 
+
 def ping_ip(ip_address, count):
     """
     Ping IP address and return tuple:

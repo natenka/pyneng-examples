@@ -6,7 +6,12 @@ import re
 
 
 def cisco_send_show_command(
-    host, username, password, enable_pass, command, max_read=60000,
+    host,
+    username,
+    password,
+    enable_pass,
+    command,
+    max_read=60000,
     pause=0.5,
 ):
     client = paramiko.SSHClient()
@@ -49,9 +54,7 @@ if __name__ == "__main__":
     result = {}
     ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
     for ip in ip_list:
-        out = cisco_send_show_command(
-            ip, "cisco", "cisco", "cisco", "sh ip int br"
-        )
+        out = cisco_send_show_command(ip, "cisco", "cisco", "cisco", "sh ip int br")
         result[ip] = out
         break
     pprint(result)

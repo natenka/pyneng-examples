@@ -78,7 +78,7 @@ if __name__ == "__main__":
         "password": "cisco",
         "secret": "cisco",
         "username": "cisco",
-        "timeout": 4
+        "timeout": 4,
     }
     with open("devices.yaml") as f:
         devices = yaml.safe_load(f)

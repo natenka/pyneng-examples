@@ -10,6 +10,7 @@ r1 = {
     "platform": "cisco_iosxe",
 }
 
+
 def send_show(device, show_commands):
     if type(show_commands) == str:
         show_commands = [show_commands]

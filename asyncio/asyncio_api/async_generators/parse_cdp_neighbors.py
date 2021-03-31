@@ -20,6 +20,7 @@ async def get_one_neighbor(filename):
             if not line:
                 return
 
+
 def parse_neighbor(output):
     regex = (
         r"Device ID: (\S+).+?"

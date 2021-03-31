@@ -2,6 +2,7 @@ from dataclasses import field
 from typing import Optional
 from pydantic.dataclasses import dataclass
 
+
 @dataclass
 class Book:
     title: str
@@ -26,7 +27,6 @@ class Book:
         if not value >= 0:
             raise ValueError("Значение должно быть положительным")
         self._price = float(value)
-
 
 
 book1 = Book("Good Omens", "24", 1000)

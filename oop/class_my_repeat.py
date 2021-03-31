@@ -9,8 +9,6 @@ class MyRepeat:
         return self
 
 
-
 if __name__ == "__main__":
-    print(list(zip([1,2,3], MyRepeat(100))))
+    print(list(zip([1, 2, 3], MyRepeat(100))))
     # [(1, 100), (2, 100), (3, 100)]
-
