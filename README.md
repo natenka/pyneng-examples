@@ -1,7 +1,4 @@
 # pyneng-examples
 
-Примеры кода Python для сетевых инженеров.
-
-## concurrent_futures
-
+Примеры использования Python для сетевых инженеров.
 
