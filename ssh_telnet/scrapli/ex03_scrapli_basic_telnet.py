@@ -1,4 +1,6 @@
 from scrapli.driver.core import IOSXEDriver
+from scrapli.exceptions import ScrapliException
+import socket
 
 r1 = {
     "host": "192.168.100.1",
@@ -12,15 +14,25 @@ r1 = {
 
 
 def send_show(device, show_command):
-    with IOSXEDriver(**r1) as ssh:
-        reply = ssh.send_command(show_command)
-        return reply.result
+    try:
+        with IOSXEDriver(**r1) as ssh:
+            reply = ssh.send_command(show_command)
+            return reply.result
+    except socket.timeout as error:
+        print(error)
+    except ScrapliException as error:
+        print(error, device["host"])
 
 
 def send_cfg(device, cfg_commands):
-    with IOSXEDriver(**r1) as ssh:
-        reply = ssh.send_configs(cfg_commands)
-        return reply.result
+    try:
+        with IOSXEDriver(**r1) as ssh:
+            reply = ssh.send_configs(cfg_commands)
+            return reply.result
+    except socket.timeout as error:
+        print(error)
+    except ScrapliException as error:
+        print(error, device["host"])
 
 
 if __name__ == "__main__":
