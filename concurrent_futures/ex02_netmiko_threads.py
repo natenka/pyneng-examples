@@ -33,12 +33,10 @@ def send_show_command(device, show):
 def send_show_to_devices(devices, show):
     result_dict = {}
     with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = []
-        f = executor.sumbit(send_show_command, device, show)
+        results = executor.map(send_show_command, devices, repeat(show))
         for dev, output in zip(devices, results):
             host = dev["host"]
             result_dict[host] = output
-    print("### Все потоки отработали")
     return result_dict
 
 

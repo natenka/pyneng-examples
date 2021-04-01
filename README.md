@@ -2,7 +2,7 @@
 
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Примеры использования Python для сетевых инженеров
+## Examples of using Python for network engineers
 
 > Не забывайте про поиск GitHub по репозиторию, так можно найти все примеры
 > по какому-то конкретному модулю.
@@ -33,14 +33,7 @@
 * oop - основы, специальные методы, property и т.д.
 * package - пример Python package
 * regex - примеры использования регулярных выражений для обработки вывода show команд
-* ssh_telnet - модуля для подключения Telnet/SSH
-
-  * netmiko
-  * paramiko
-  * pexpect
-  * scrapli
-  * telnetlib
-
+* ssh_telnet - подключение Telnet/SSH
 * subprocess
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
