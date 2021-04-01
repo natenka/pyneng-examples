@@ -1,5 +1,11 @@
 ## How to connect to network devices via SSH/Telnet
 
+* netmiko - SSHv2/Telnet
+* paramiko - SSHv2
+* pexpect - any kind of interactive session
+* scrapli - SSH/Telnet
+* telnetlib - Telnet
+
 Used in this section:
 
 * [concurrent.futures](https://github.com/natenka/pyneng-examples/tree/main/concurrent_futures)
