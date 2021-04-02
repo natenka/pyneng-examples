@@ -12,13 +12,13 @@ r1 = {
 
 
 def send_show(device, show_command):
-    with Scrapli(**r1) as ssh:
+    with Scrapli(**device) as ssh:
         reply = ssh.send_command(show_command)
         return reply.result
 
 
 def send_cfg(device, cfg_commands):
-    with Scrapli(**r1) as ssh:
+    with Scrapli(**device) as ssh:
         reply = ssh.send_configs(cfg_commands)
         return reply.result
 
