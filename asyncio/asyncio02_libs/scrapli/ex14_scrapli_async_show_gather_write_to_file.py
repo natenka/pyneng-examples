@@ -21,11 +21,11 @@ async def send_show(device, show_commands):
         print(error, device["host"])
 
 
-def write_to_file(hostname, command_dict):
-    filename = f"{hostname.lower()}_cmd_output.txt"
+def write_to_file(host, command_dict):
+    filename = f"{host.lower().replace('.', '_')}_cmd_output.txt"
     with open(filename, "w") as f:
         for cmd, output in command_dict.items():
-            f.write(f"\n\n{hostname}{cmd}\n")
+            f.write(f"\n\n{host}{cmd}\n")
             f.write(output)
 
 
