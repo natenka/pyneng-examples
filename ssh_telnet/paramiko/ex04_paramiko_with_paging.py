@@ -1,58 +1,59 @@
-import paramiko
 import time
 import socket
 from pprint import pprint
 import re
 
+import yaml
+import paramiko
+
 
 def send_show_command(
-    ip,
-    username,
-    password,
-    enable,
-    command,
-    max_bytes=60000,
-    short_pause=1,
-    long_pause=5,
+    host, username, password, enable_pass, command, max_read=60000, pause=0.5
 ):
-    cl = paramiko.SSHClient()
-    cl.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    cl.connect(
-        hostname=ip,
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(
+        hostname=host,
         username=username,
         password=password,
         look_for_keys=False,
         allow_agent=False,
+        timeout=10,
     )
-    with cl.invoke_shell() as ssh:
+    with client.invoke_shell() as ssh:
         ssh.send("enable\n")
-        ssh.send(enable + "\n")
-        time.sleep(short_pause)
-        ssh.recv(max_bytes)
+        ssh.send(f"{enable_pass}\n")
+        time.sleep(pause)
+        read_output = ssh.recv(max_read).decode("utf-8")
+        match_prompt = re.search(r"\S+#", read_output)
+
+        if match_prompt:
+            prompt = match_prompt.group()
+        else:
+            prompt = "#"
 
         result = {}
-        for command in commands:
-            ssh.send(f"{command}\n")
-            ssh.settimeout(5)
+        ssh.send(f"{command}\n")
+        ssh.settimeout(5)
 
-            output = ""
-            while True:
-                try:
-                    page = ssh.recv(max_bytes).decode("utf-8")
-                    output += page
-                    time.sleep(0.5)
-                except socket.timeout:
-                    break
-                if "More" in page:
-                    ssh.send(" ")
-            output = re.sub(" +--More--| +\x08+ +\x08+", "\n", output)
-            result[command] = output
+        output = ""
+        while True:
+            try:
+                page = ssh.recv(max_read).decode("utf-8")
+                output += page
+                time.sleep(0.2)
+            except socket.timeout:
+                break
+            if "More" in page:
+                ssh.send(" ")
+        output = re.sub(" +--More--| +\x08+ +\x08+", "\n", output)
 
-        return result
+        return output.replace("\r\n", "\n")
 
 
 if __name__ == "__main__":
-    devices = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    commands = ["sh run"]
-    result = send_show_command("192.168.100.1", "cisco", "cisco", "cisco", commands)
-    pprint(result, width=120)
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        r1 = devices[0]
+        out = send_show_command(**r1, command="sh run")
+        pprint(out, width=120)
