@@ -39,7 +39,7 @@
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
 
-## Progress (4/48)
+## Progress (5/48)
 
 | Topic                                  | done  | docstrings |
 | -------------------------------------- | ----- | ---------- |
@@ -85,7 +85,7 @@
 | regex             | | |
 | ssh_telnet netmiko          | done | |
 | ssh_telnet paramiko          | done | |
-| ssh_telnet pexpect          | | |
+| ssh_telnet pexpect          | done | |
 | ssh_telnet scrapli          | done | |
 | ssh_telnet telnetlib          | | |
 | subprocess            | | |
