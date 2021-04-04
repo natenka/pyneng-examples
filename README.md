@@ -22,7 +22,7 @@
 
 ## Темы
 
-* asyncio - основы asyncio, модули для подключения Telnet/SSH/HTTP(S), работа с asyncio
+* asyncio - основы asyncio, модули для подключения Telnet/ssh_telnet/HTTP(S), работа с asyncio
 * cli_interface - модули для создания интерфейса командной строки: click, typer, argparse
 * concurrent_futures - параллельное подключение к оборудованию с помощью модуля concurrent.futures
 * data_classes
@@ -33,21 +33,21 @@
 * oop - основы, специальные методы, property и т.д.
 * package - пример Python package
 * regex - примеры использования регулярных выражений для обработки вывода show команд
-* ssh_telnet - подключение Telnet/SSH
+* ssh_telnet_telnet - подключение Telnet/ssh_telnet
 * subprocess
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
 
-## Progress
+## Progress (3/48)
 
 | Topic                                  | done  | docstrings |
 | -------------------------------------- | ----- | ---------- |
 | asyncio01_basics                       | | |
 | asyncio02_libs aiohttp_basics          | | |
-| asyncio02_libs asynssh         | | |
+| asyncio02_libs asynssh_telnet         | | |
 | asyncio02_libs httpx         | | |
 | asyncio02_libs netdev         | | |
-| asyncio02_libs scrapli         | | |
+| asyncio02_libs scrapli         | done | |
 | asyncio03_api async_decorators         | | |
 | asyncio03_api async_generators         | | |
 | asyncio03_api asyncio_loop         | | |
@@ -57,9 +57,9 @@
 | asyncio03_api run_in_thread         | | |
 | asyncio03_api semaphore         | | |
 | asyncio03_api task_class         | | |
-| argparse          | | |
-| click          | | |
-| typer          | | |
+| cli_interface argparse          | | |
+| cli_interface click          | | |
+| cli_interface typer          | | |
 | concurrent_futures            | | |
 | data_classes              | | |
 | decorator             | | |
@@ -82,11 +82,11 @@
 | oop staticmethod          | | |
 | python package            | | |
 | regex             | | |
-| ssh netmiko          | | |
-| ssh paramiko          | | |
-| ssh pexpect          | | |
-| ssh scrapli          | | |
-| ssh telnetlib          | | |
+| ssh_telnet netmiko          | done | |
+| ssh_telnet paramiko          | | |
+| ssh_telnet pexpect          | | |
+| ssh_telnet scrapli          | done | |
+| ssh_telnet telnetlib          | | |
 | subprocess            | | |
 | textfsm           | | |
 | type_annotations              | | |
