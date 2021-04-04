@@ -38,7 +38,7 @@
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
 
-## Progress (3/48)
+## Progress (4/48)
 
 | Topic                                  | done  | docstrings |
 | -------------------------------------- | ----- | ---------- |
