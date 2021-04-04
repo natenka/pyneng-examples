@@ -38,3 +38,55 @@
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
 
+## Progress
+
+| Topic                                  | done  | docstrings |
+| -------------------------------------- | ----- | ---------- |
+| asyncio01_basics                       | | |
+| asyncio02_libs aiohttp_basics          | | |
+| asyncio02_libs asynssh         | | |
+| asyncio02_libs httpx         | | |
+| asyncio02_libs netdev         | | |
+| asyncio02_libs scrapli         | | |
+| asyncio03_api async_decorators         | | |
+| asyncio03_api async_generators         | | |
+| asyncio03_api asyncio_loop         | | |
+| asyncio03_api asyncio_subprocess         | | |
+| asyncio03_api asyncio_wait         | | |
+| asyncio03_api class_with_async_methods         | | |
+| asyncio03_api run_in_thread         | | |
+| asyncio03_api semaphore         | | |
+| asyncio03_api task_class         | | |
+| argparse          | | |
+| click          | | |
+| typer          | | |
+| concurrent_futures            | | |
+| data_classes              | | |
+| decorator             | | |
+| generator             | | |
+| logging          | | |
+| misc cisco_config_diff          | | |
+| misc colored_dict          | | |
+| misc config_to_dict          | | |
+| misc explore_map          | | |
+| misc get_info_from_network          | | |
+| oop abc_class          | | |
+| oop basic_class          | | |
+| oop classmethod          | | |
+| oop data_classes          | | |
+| oop inheritance          | | |
+| oop magic_methods          | | |
+| oop mixin_class          | | |
+| oop namedtuple_class          | | |
+| oop property          | | |
+| oop staticmethod          | | |
+| python package            | | |
+| regex             | | |
+| ssh netmiko          | | |
+| ssh paramiko          | | |
+| ssh pexpect          | | |
+| ssh scrapli          | | |
+| ssh telnetlib          | | |
+| subprocess            | | |
+| textfsm           | | |
+| type_annotations              | | |
