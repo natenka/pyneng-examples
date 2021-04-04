@@ -1,7 +1,7 @@
 import getpass
 import sys
 import re
-from netmiko import ConnectHandler
+from netmiko import Netmiko
 
 
 def cfg_comand(session, section, command):
@@ -17,21 +17,22 @@ def cfg_comand(session, section, command):
 
 
 def send_cfg_commands(device, section, command):
-    with ConnectHandler(**device_params) as ssh:
+    with Netmiko(**device_params) as ssh:
         ssh.enable()
         output = cfg_comand(ssh, section, command)
         if output:
-            print(output)
+            return output
 
 
 if __name__ == "__main__":
     device_params = {
         "device_type": "cisco_ios",
-        "ip": "192.168.100.1",
+        "host": "192.168.100.1",
         "username": "cisco",
         "password": "cisco",
         "secret": "cisco",
     }
-    send_cfg_commands(
+    output = send_cfg_commands(
         device_params, "interface Loopback45", "ip address 5.5.5.5 255.255.255.255"
     )
+    print(output)

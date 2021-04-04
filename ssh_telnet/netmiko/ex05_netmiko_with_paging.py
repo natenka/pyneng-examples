@@ -1,9 +1,9 @@
-from netmiko import ConnectHandler, NetmikoTimeoutException
+from netmiko import Netmiko, NetmikoTimeoutException
 import yaml
 
 
 def send_show_command(device_params, command):
-    with ConnectHandler(**device_params) as ssh:
+    with Netmiko(**device_params) as ssh:
         ssh.enable()
         prompt = ssh.find_prompt()
         ssh.send_command("terminal length 100")

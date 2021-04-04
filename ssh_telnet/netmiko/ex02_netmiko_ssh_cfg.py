@@ -6,21 +6,21 @@ import paramiko
 
 def send_cfg(device, commands):
     try:
-        with netmiko.ConnectHandler(**device) as ssh:
+        with netmiko.Netmiko(**device) as ssh:
             ssh.enable()
             result = ""
             result += ssh.config_mode()
             for cmd in commands:
                 output = ssh.send_config_set(cmd, exit_config_mode=False)
-                if "%" in output:
-                    raise ValueError(f"При выполнении команды {cmd} возникла ошибка")
                 result += output
+                if "%" in output:
+                    print(f"При выполнении команды {cmd} возникла ошибка")
             result += ssh.exit_config_mode()
             return result.replace("\r\n", "\n")
     except netmiko.NetmikoTimeoutException as error:
-        print(f"Не удалось подключиться к {device['host']}")
+        print(f"Failed to connect to {device['host']}")
     except paramiko.ssh_exception.AuthenticationException:
-        print(f"Ошибка аутентификации с {device['host']}")
+        print(f"Authentication error on {device['host']}")
 
 
 if __name__ == "__main__":

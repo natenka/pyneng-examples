@@ -1,7 +1,9 @@
 from pprint import pprint
+import socket
+
 import yaml
 from netmiko import (
-    ConnectHandler,
+    Netmiko,
     NetmikoTimeoutException,
     NetmikoAuthenticationException,
 )
@@ -9,21 +11,25 @@ from netmiko import (
 
 def send_show_command(device, commands):
     result = {}
+    if type(commands) == str:
+        commands = [commands]
     try:
-        with ConnectHandler(**device) as ssh:
+        with Netmiko(**device) as ssh:
             ssh.enable()
             for command in commands:
                 output = ssh.send_command(command)
                 result[command] = output
         return result
-    except (NetmikoTimeoutException, NetmikoAuthenticationException) as error:
+    except NetmikoAuthenticationException as error:
         print(error)
+    except socket.timeout:
+        print(f"Timeout when connecting to {device['host']}")
 
 
 if __name__ == "__main__":
     device = {
         "device_type": "cisco_ios_telnet",
-        "ip": "192.168.100.1",
+        "host": "192.168.100.1",
         "username": "cisco",
         "password": "cisco",
         "secret": "cisco",
