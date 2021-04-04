@@ -9,4 +9,4 @@
 * [concurrent.futures](https://github.com/natenka/pyneng-examples/tree/main/concurrent_futures)
 * [logging](https://github.com/natenka/pyneng-examples/tree/main/logging)
 * [textfsm](https://github.com/natenka/pyneng-examples/tree/main/textfsm)
-
+* [OOP special methods](https://github.com/natenka/pyneng-examples/tree/main/oop/magic_methods)
