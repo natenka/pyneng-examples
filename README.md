@@ -45,7 +45,7 @@
 | -------------------------------------- | ----- | ---------- |
 | asyncio01_basics                       | | |
 | asyncio02_libs aiohttp_basics          | | |
-| asyncio02_libs asynssh_telnet         | | |
+| asyncio02_libs asynssh         | | |
 | asyncio02_libs httpx         | | |
 | asyncio02_libs netdev         | | |
 | asyncio02_libs scrapli         | done | |
