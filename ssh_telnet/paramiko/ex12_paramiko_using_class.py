@@ -2,7 +2,7 @@ from pprint import pprint
 import socket
 import paramiko
 import yaml
-from ex11_paramiko_class import ConnectSSH
+from ex11_paramiko_basic_class import ConnectSSH
 
 
 def send_show_command(device, command):
