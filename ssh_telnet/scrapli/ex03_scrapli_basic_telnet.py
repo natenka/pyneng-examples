@@ -8,6 +8,8 @@ r1 = {
     "auth_password": "cisco",
     "auth_secondary": "cisco",
     "auth_strict_key": False,
+    "timeout_socket": 5,  # timeout for establishing socket/initial connection in seconds
+    "timeout_transport": 10,  # timeout for ssh|telnet transport in seconds
     "transport": "telnet",
     "port": 23,  # обязательно указывать при подключении telnet
 }
@@ -15,7 +17,7 @@ r1 = {
 
 def send_show(device, show_command):
     try:
-        with IOSXEDriver(**r1) as ssh:
+        with IOSXEDriver(**device) as ssh:
             reply = ssh.send_command(show_command)
             return reply.result
     except socket.timeout as error:
@@ -26,7 +28,7 @@ def send_show(device, show_command):
 
 def send_cfg(device, cfg_commands):
     try:
-        with IOSXEDriver(**r1) as ssh:
+        with IOSXEDriver(**device) as ssh:
             reply = ssh.send_configs(cfg_commands)
             return reply.result
     except socket.timeout as error:

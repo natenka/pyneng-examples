@@ -1,4 +1,5 @@
 from pprint import pprint
+import logging
 from scrapli import Scrapli
 from scrapli.exceptions import ScrapliException
 
@@ -15,18 +16,26 @@ r1 = {
 }
 
 
+logging.basicConfig(
+    format="%(asctime)s %(name)s %(levelname)s: %(message)s", level=logging.INFO
+)
+
+
 def send_show(device, show_commands):
+    host = device["host"]
     if type(show_commands) == str:
         show_commands = [show_commands]
     cmd_dict = {}
+    logging.info(f">>> Connecting to {host}")
     try:
         with Scrapli(**device) as ssh:
             for cmd in show_commands:
                 reply = ssh.send_command(cmd)
                 cmd_dict[cmd] = reply.result
+        logging.info(f"<<< Received output from {host}")
         return cmd_dict
     except ScrapliException as error:
-        print(error, device["host"])
+        print(error, host)
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ r1 = {
 
 def send_show(device, show_command):
     try:
-        with IOSXEDriver(**r1) as ssh:
+        with IOSXEDriver(**device) as ssh:
             reply = ssh.send_command(show_command)
             return reply.result
     except ScrapliException as error:
@@ -24,7 +24,7 @@ def send_show(device, show_command):
 
 def send_cfg(device, cfg_commands):
     try:
-        with IOSXEDriver(**r1) as ssh:
+        with IOSXEDriver(**device) as ssh:
             reply = ssh.send_configs(cfg_commands)
             return reply.result
     except ScrapliException as error:
