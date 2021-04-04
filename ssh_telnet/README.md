@@ -28,4 +28,5 @@ Docs:
 Code examples:
 
 * [netmiko](https://github.com/ktbyers/netmiko/tree/develop/examples)
+* [paramiko demos](https://github.com/paramiko/paramiko/tree/master/demos)
 * [scrapli](https://github.com/carlmontanari/scrapli/tree/master/examples)

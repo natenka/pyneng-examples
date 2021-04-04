@@ -83,7 +83,7 @@
 | python package            | | |
 | regex             | | |
 | ssh_telnet netmiko          | done | |
-| ssh_telnet paramiko          | | |
+| ssh_telnet paramiko          | done | |
 | ssh_telnet pexpect          | | |
 | ssh_telnet scrapli          | done | |
 | ssh_telnet telnetlib          | | |
