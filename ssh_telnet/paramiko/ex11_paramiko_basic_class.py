@@ -54,7 +54,7 @@ class ConnectSSH:
                 time.sleep(self.read_pause)
                 part = self._ssh.recv(self.max_read).decode("utf-8")
                 command_output += part
-                match_prompt = re.search(expect_line, command_output)
+                match_prompt = re.search(f"{expect_line}|{self.prompt}", command_output)
                 if match_prompt:
                     break
             except socket.timeout:
@@ -65,7 +65,7 @@ class ConnectSSH:
         return self._read_until(self.prompt)
 
     def _read_until_cfg_prompt(self):
-        hostname = prompt.split("#")[0]
+        hostname = self.prompt.split("#")[0]
         cfg_regex = rf"{hostname}\(.+\)#"
         return self._read_until(cfg_regex)
 
@@ -76,8 +76,10 @@ class ConnectSSH:
 
     def send_config_commands(self, commands):
         cfg_output = ""
-        if isinstance(commands, str):
-            commands = [commands]
+        if type(commands) == str:
+            commands = ["conf t", commands, "end"]
+        else:
+            commands = ["conf t", *commands, "end"]
         for cmd in commands:
             self._ssh.send(f"{cmd}\n")
             cfg_output += self._read_until_cfg_prompt()
@@ -91,3 +93,15 @@ class ConnectSSH:
 
     def close(self):
         self._ssh.close()
+
+
+if __name__ == "__main__":
+    config_commands = ['logging buffered 20010', 'ip http server']
+
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        r1 = devices[0]
+        with ConnectSSH(**r1) as r1_ssh:
+            out = r1_ssh.send_config_commands(config_commands)
+            pprint(out, width=120)
+

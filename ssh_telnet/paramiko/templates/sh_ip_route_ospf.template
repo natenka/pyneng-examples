@@ -1,0 +1,10 @@
+Value network (\S+)
+Value mask (\d+)
+Value ad (\d+)
+Value metric (\d+)
+Value Required,List nhop (\S+)
+
+Start
+  ^O -> Continue.Record
+  ^O +${network}/${mask} \[${ad}/${metric}\] via ${nhop},
+  ^.+\[${ad}/${metric}\] via ${nhop},

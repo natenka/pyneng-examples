@@ -4,6 +4,7 @@ import socket
 import re
 
 import paramiko
+from textfsm import clitable
 import yaml
 
 
@@ -62,7 +63,7 @@ class ConnectSSH:
                 time.sleep(self.read_pause)
                 part = self._ssh.recv(self.max_read).decode("utf-8")
                 command_output += part
-                match_prompt = re.search(expect_line, command_output)
+                match_prompt = re.search(f"{expect_line}|{self.prompt}", command_output)
                 if match_prompt:
                     break
             except socket.timeout:
@@ -73,22 +74,56 @@ class ConnectSSH:
         return self._read_until(self.prompt)
 
     def _read_until_cfg_prompt(self):
-        hostname = prompt.split("#")[0]
+        hostname = self.prompt.split("#")[0]
         cfg_regex = rf"{hostname}\(.+\)#"
         return self._read_until(cfg_regex)
 
-    def send_command(self, command):
-        self._ssh.send(f"{command}\n")
-        result = self._read_until_prompt()
-        return result
+    def _error_in_command(self, command, result, strict=False):
+        regex = "% (?P<err>.+)"
+        template = (
+            'When executing the command "{cmd}" on device {device}, '
+            "an error occurred -> {error}"
+        )
+        error_in_cmd = re.search(regex, result)
+        if error_in_cmd:
+            message = template.format(
+                cmd=command, device=self.host, error=error_in_cmd.group("err")
+            )
+            if strict:
+                raise ValueError(message)
+            else:
+                print(message)
 
-    def send_config_commands(self, commands):
+    def _parse_output(self, command, command_output, templates_dir="templates"):
+        attributes = {"Command": command, "Vendor": "cisco_ios"}
+        cli = clitable.CliTable("index", templates_dir)
+        cli.ParseCmd(command_output, attributes)
+        parsed_output = [dict(zip(cli.header, row)) for row in cli]
+        if parsed_output:
+            return parsed_output
+        else:
+            return command_output
+
+    def send_command(self, command, parse=False, templates_dir="templates"):
+        self._ssh.send(f"{command}\n")
+        output = self._read_until_prompt()
+        if parse:
+            result = self._parse_output(command, output, templates_dir)
+            return result
+        else:
+            return output
+
+    def send_config_commands(self, commands, strict=False):
         cfg_output = ""
-        if isinstance(commands, str):
-            commands = [commands]
+        if type(commands) == str:
+            commands = ["conf t", commands, "end"]
+        else:
+            commands = ["conf t", *commands, "end"]
         for cmd in commands:
             self._ssh.send(f"{cmd}\n")
-            cfg_output += self._read_until_cfg_prompt()
+            current_output = self._read_until_cfg_prompt()
+            cfg_output += current_output
+            self._error_in_command(cmd, current_output, strict=strict)
         return cfg_output
 
     def __enter__(self):
@@ -99,3 +134,26 @@ class ConnectSSH:
 
     def close(self):
         self._ssh.close()
+
+
+if __name__ == "__main__":
+    commands_with_errors = ["logging 0255.255.1", "logging", "a"]
+    correct_commands = ["logging buffered 20010", "ip http server"]
+    commands = commands_with_errors + correct_commands
+
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        r1 = devices[0]
+        with ConnectSSH(**r1) as r1_ssh:
+            output = r1_ssh.send_command("sh ip int br", parse=False)
+            pprint(output, width=120)
+
+            parsed_output = r1_ssh.send_command("sh ip int br", parse=True)
+            pprint(parsed_output, width=120)
+
+            out1 = r1_ssh.send_config_commands(correct_commands)
+            pprint(out1, width=120)
+
+            out2 = r1_ssh.send_config_commands(commands_with_errors)
+            # out2 = r1_ssh.send_config_commands(commands_with_errors, strict=True)
+            pprint(out2, width=120)

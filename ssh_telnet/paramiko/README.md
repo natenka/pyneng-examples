@@ -3,6 +3,7 @@
 ## Links
 
 * [paramiko в книге Python для сетевых инженеров](https://pyneng.readthedocs.io/ru/latest/book/18_ssh_telnet/paramiko.html), [english version](https://pyneng.readthedocs.io/en/latest/book/18_ssh_telnet/paramiko.html)
+* [paramiko demos](https://github.com/paramiko/paramiko/tree/master/demos)
 
 ## Used in this section
 
