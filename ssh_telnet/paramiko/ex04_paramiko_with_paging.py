@@ -12,14 +12,22 @@ def send_show_command(
 ):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(
-        hostname=host,
-        username=username,
-        password=password,
-        look_for_keys=False,
-        allow_agent=False,
-        timeout=10,
-    )
+    try:
+        client.connect(
+            hostname=host,
+            username=username,
+            password=password,
+            look_for_keys=False,
+            allow_agent=False,
+            timeout=10
+        )
+    except socket.timeout:
+        print(f"Failed to connect to {host}")
+        return
+    except paramiko.SSHException as error:
+        print(f"{error} on {host}")
+        return
+
     with client.invoke_shell() as ssh:
         ssh.send("enable\n")
         ssh.send(f"{enable_pass}\n")
