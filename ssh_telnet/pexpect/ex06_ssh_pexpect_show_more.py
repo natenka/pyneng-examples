@@ -18,7 +18,6 @@ def cisco_send_show_command(host, username, password, enable_pass, command):
         ssh.sendline(command)
 
         while True:
-            print("### page")
             match = ssh.expect(["#", "--More--", pexpect.TIMEOUT], timeout=5)
             page = ssh.before
             page = re.sub(r" +\x08+ +\x08+", "\n", page)
@@ -28,7 +27,6 @@ def cisco_send_show_command(host, username, password, enable_pass, command):
             elif match == 1:
                 ssh.send(" ")
             else:
-                print(">>> Timeout")
                 break
     return output.replace("\r\n", "\n")
 

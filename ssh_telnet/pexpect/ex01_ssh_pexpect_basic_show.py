@@ -1,9 +1,10 @@
 from pprint import pprint
 import pexpect
+import yaml
 
 
-def cisco_send_show_command(host, username, password, enable_pass, command):
-    print(f"Подключаюсь {host}")
+def send_show_command(host, username, password, enable_pass, command):
+    print(f"Connecting to {host}")
     with pexpect.spawn(f"ssh {username}@{host}", encoding="utf-8") as ssh:
         ssh.expect("[Pp]assword")
         ssh.sendline(password)
@@ -23,9 +24,8 @@ def cisco_send_show_command(host, username, password, enable_pass, command):
 
 
 if __name__ == "__main__":
-    result = {}
-    ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    for ip in ip_list:
-        out = cisco_send_show_command(ip, "cisco", "cisco", "cisco", "sh ip int br")
-        result[ip] = out
-    pprint(result)
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        for device in devices:
+            out = send_show_command(**device, command="sh ip int br")
+            pprint(out, width=120)
