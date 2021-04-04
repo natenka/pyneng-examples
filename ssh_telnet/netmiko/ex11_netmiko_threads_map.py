@@ -1,12 +1,11 @@
 from concurrent.futures import ThreadPoolExecutor
 import re
 from pprint import pprint
-import time
-import random
 from itertools import repeat
-from datetime import datetime
 import logging
+
 import netmiko
+import paramiko
 import yaml
 
 
@@ -20,22 +19,26 @@ logging.basicConfig(
 
 def send_show_command(device, show):
     host = device["host"]
-    logging.info(f">>> Подключаюсь к {host}")
-    with netmiko.Netmiko(**device) as ssh:
-        ssh.enable()
-        output = ssh.send_command(show)
-        logging.debug(f"\n{output}\n")
-        logging.info(f"<<< Получена информация от {host}")
-        return output
+    logging.info(f">>> Connecting to {host}")
+    try:
+        with netmiko.Netmiko(**device) as ssh:
+            ssh.enable()
+            output = ssh.send_command(show)
+            logging.debug(f"\n{output}\n")
+            logging.info(f"<<< Received output from {host}")
+            return output
+    except netmiko.NetmikoTimeoutException as error:
+        print(f"Failed to connect to {host}")
+    except paramiko.ssh_exception.AuthenticationException:
+        print(f"Authentication error on {host}")
 
 
-def send_show_to_devices(devices, show):
+def send_show_to_devices(devices, show, max_threads=10):
     result_dict = {}
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=max_threads) as executor:
         results = executor.map(send_show_command, devices, repeat(show))
         for dev, output in zip(devices, results):
-            host = dev["host"]
-            result_dict[host] = output
+            result_dict[dev["host"]] = output
     return result_dict
 
 
