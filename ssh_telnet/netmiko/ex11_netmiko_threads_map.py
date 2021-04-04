@@ -28,9 +28,9 @@ def send_show_command(device, show):
             logging.info(f"<<< Received output from {host}")
             return output
     except netmiko.NetmikoTimeoutException as error:
-        print(f"Failed to connect to {host}")
+        logging.info(f"Failed to connect to {host}")
     except paramiko.ssh_exception.AuthenticationException:
-        print(f"Authentication error on {host}")
+        logging.info(f"Authentication error on {host}")
 
 
 def send_show_to_devices(devices, show, max_threads=10):
