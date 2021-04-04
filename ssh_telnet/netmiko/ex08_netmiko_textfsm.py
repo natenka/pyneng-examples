@@ -34,4 +34,3 @@ if __name__ == "__main__":
             dev, "sh ip int br", templates_path=full_pth
         )
         pprint(result, width=130)
-

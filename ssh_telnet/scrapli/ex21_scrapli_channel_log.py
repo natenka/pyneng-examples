@@ -8,7 +8,7 @@ r1 = {
     "auth_secondary": "cisco",
     "auth_strict_key": False,
     "platform": "cisco_iosxe",
-    "channel_log": True, # channel_log in scrapli_channel.log
+    "channel_log": True,  # channel_log in scrapli_channel.log
 }
 
 

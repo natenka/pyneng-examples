@@ -96,7 +96,7 @@ class ConnectSSH:
 
 
 if __name__ == "__main__":
-    config_commands = ['logging buffered 20010', 'ip http server']
+    config_commands = ["logging buffered 20010", "ip http server"]
 
     with open("devices.yaml") as f:
         devices = yaml.safe_load(f)
@@ -104,4 +104,3 @@ if __name__ == "__main__":
         with ConnectSSH(**r1) as r1_ssh:
             out = r1_ssh.send_config_commands(config_commands)
             pprint(out, width=120)
-

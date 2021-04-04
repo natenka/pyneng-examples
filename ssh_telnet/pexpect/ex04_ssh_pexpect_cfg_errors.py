@@ -12,7 +12,9 @@ logging.basicConfig(
 def send_cfg_commands(host, username, password, enable_pass, cfg_commands):
     logging.info(f"Connecting to {host}")
     try:
-        with pexpect.spawn(f"ssh {username}@{host}", timeout=10, encoding="utf-8") as ssh:
+        with pexpect.spawn(
+            f"ssh {username}@{host}", timeout=10, encoding="utf-8"
+        ) as ssh:
             ssh.expect("[Pp]assword")
             ssh.sendline(password)
             enable_mode = ssh.expect([">", "#"])

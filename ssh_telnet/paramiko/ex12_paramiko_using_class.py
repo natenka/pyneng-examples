@@ -22,4 +22,3 @@ if __name__ == "__main__":
         for dev in devices:
             out = send_show_command(dev, command="sh ip int br")
             pprint(out, width=120)
-

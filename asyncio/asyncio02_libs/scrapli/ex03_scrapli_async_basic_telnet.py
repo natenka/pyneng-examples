@@ -21,10 +21,10 @@ async def send_show(device, command):
     # хосту будет 2 минуты, поэтому пока что лучше добавлять wait_for или
     # async_timeout вокруг подключения
     try:
-        #async with timeout(10):
-            async with AsyncIOSXEDriver(**device) as ssh:
-                result = await ssh.send_command(command)
-                return result.result
+        # async with timeout(10):
+        async with AsyncIOSXEDriver(**device) as ssh:
+            result = await ssh.send_command(command)
+            return result.result
     except ScrapliException as error:
         print(error, device["host"])
     except asyncio.exceptions.TimeoutError:

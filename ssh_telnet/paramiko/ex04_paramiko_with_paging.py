@@ -19,7 +19,7 @@ def send_show_command(
             password=password,
             look_for_keys=False,
             allow_agent=False,
-            timeout=10
+            timeout=10,
         )
     except socket.timeout:
         print(f"Failed to connect to {host}")

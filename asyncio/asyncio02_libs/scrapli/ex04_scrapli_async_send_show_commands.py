@@ -32,4 +32,3 @@ async def send_show(device, show_commands):
 if __name__ == "__main__":
     output = asyncio.run(send_show(r1, "show ip int br"))
     print(output)
-
