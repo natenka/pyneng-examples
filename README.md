@@ -2,7 +2,7 @@
 
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## Examples of using Python for network engineers
+## Python code examples for Network Engineers
 
 > Не забывайте про поиск GitHub по репозиторию, так можно найти все примеры
 > по какому-то конкретному модулю.
