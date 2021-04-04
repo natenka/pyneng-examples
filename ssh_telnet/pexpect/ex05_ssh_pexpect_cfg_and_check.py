@@ -1,6 +1,7 @@
 from pprint import pprint
 import pexpect
 import click
+import yaml
 
 
 def cisco_cfg_device(
@@ -12,7 +13,6 @@ def cisco_cfg_device(
     check_cmd=None,
     check_str=None,
 ):
-    print(f"Подключаюсь {host}")
     with pexpect.spawn(f"ssh {username}@{host}", timeout=10, encoding="utf-8") as ssh:
         ssh.expect("[Pp]assword")
         ssh.sendline(password)
@@ -26,43 +26,37 @@ def cisco_cfg_device(
         ssh.sendline("terminal length 0")
         ssh.expect("#")
 
-        ssh.sendline("conf t")
-        # ssh.expect("\S+config\S+#")
-        ssh.expect("#")
-        result = ssh.before + ssh.after
+        cfg_commands = ["conf t", *cfg_commands, "end"]
+        result = ""
         for cmd in cfg_commands:
             ssh.sendline(cmd)
-            ssh.expect("#")
+            ssh.expect(["config\S+#", "#"])
             output = ssh.before + ssh.after
             if "%" in output:
-                click.secho(f"При выполнении команды {cmd} возникла ошибка", fg="red")
-                # print(output)
+                click.secho(
+                    f'When executing the command "{cmd}" an error occurred', fg="red"
+                )
             result += output.replace("\r\n", "\n")
-        ssh.sendline("end")
-        ssh.expect("#")
-        result += ssh.before + ssh.after
         if check_cmd and check_str:
             ssh.sendline(check_cmd)
             ssh.expect("#")
             check_output = ssh.before
             if check_str in check_output:
-                click.secho("Настройка прошла успешно", fg="green")
+                click.secho("Configuration was successful", fg="green")
             else:
-                click.secho("Настройка не прошла проверку", fg="red")
+                click.secho("Configuration failed validation", fg="red")
     return result
 
 
 if __name__ == "__main__":
-    ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    for ip in ip_list:
+    cfg_cmds = ["int lo200", "ip address 10.2.2.2 255.255.255.255"]
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        r1 = devices[0]
         out = cisco_cfg_device(
-            ip,
-            "cisco",
-            "cisco",
-            "cisco",
-            ["router ospf 1", "network 0.0.0.0 255.255.255.255 area 0"],
+            **r1,
+            cfg_commands=["router ospf 1", "network 0.0.0.0 255.255.255.255 area 0"],
             check_cmd="sh ip ospf",
             check_str="Routing Process",
         )
-        pprint(out)
-        break
+        pprint(out, width=120)

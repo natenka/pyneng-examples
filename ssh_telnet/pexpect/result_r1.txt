@@ -1,0 +1,184 @@
+sh run
+Building configuration...
+
+Current configuration : 3144 bytes
+!
+! Last configuration change at 18:16:14 UTC Sun Apr 4 2021 by cisco
+version 15.2
+no service timestamps debug uptime
+no service timestamps log uptime
+service password-encryption
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging buffered 20010
+no logging console
+enable password 7 070C285F4D06
+!
+no aaa new-model
+!
+mmi polling-interval 60
+no mmi auto-configure
+ 
+no mmi pvc
+mmi snmp-timeout 180
+ip auth-proxy max-login-attempts 5
+ip admission max-login-attempts 5
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name pyneng
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+crypto pki token default removal timeout 0
+!
+ 
+!
+username cisco password 7 094F471A1A0A
+username user1 password 7 00141215170A
+username user3 password 7 06160E325F1D
+!
+redundancy
+!
+!
+ip ssh version 2
+!
+policy-map OUT_QOS
+ class class-default
+  shape average 100000000 1000000
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+ 
+!
+!
+!
+interface Loopback11
+ ip address 11.1.1.1 255.255.255.255
+!
+interface Loopback100
+ no ip address
+!
+interface Loopback200
+ ip address 10.2.2.2 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 192.168.101.1 255.255.255.0 secondary
+ ip address 192.168.102.1 255.255.255.0 secondary
+ ip address 192.168.100.1 255.255.255.0
+ ipv6 address 2001::1/68
+!
+interface Ethernet0/1
+ ip address 192.168.200.1 255.255.255.0
+ ip mtu 1300
+!
+interface Ethernet0/2
+ 
+ no ip address
+ ip mtu 1300
+!
+interface Ethernet0/3
+ ip address 192.168.130.1 255.255.255.0
+ ip mtu 1300
+!
+!
+router eigrp 1
+ network 0.0.0.0
+!
+router ospf 1
+ network 4.4.4.4 0.0.0.0 area 0
+ network 5.5.5.5 0.0.0.0 area 0
+ network 10.0.0.0 0.255.255.255 area 0
+ network 19.1.1.1 0.0.0.0 area 0
+ network 90.1.1.1 0.0.0.0 area 0
+ network 192.168.100.1 0.0.0.0 area 0
+ network 192.168.100.0 0.0.0.255 area 1
+ network 192.168.101.1 0.0.0.0 area 0
+ network 192.168.102.1 0.0.0.0 area 0
+ network 192.168.130.1 0.0.0.0 area 0
+ network 192.168.200.1 0.0.0.0 area 0
+ 
+ network 0.0.0.0 255.255.255.255 area 0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+no ip http secure-server
+!
+ip access-list extended INET-to-LAN
+ permit tcp 10.0.1.0 0.0.0.255 any eq www
+ permit tcp 10.0.1.0 0.0.0.255 any eq 22
+ permit icmp any any
+ip access-list extended IN_to_OUT
+ permit tcp 10.0.1.0 0.0.0.255 any eq www
+ permit tcp 10.0.1.0 0.0.0.255 any eq 22
+!
+logging 10.255.255.1
+logging 4.4.4.4
+logging 10.1.1.1
+logging 10.5.5.5
+!
+!
+!
+ 
+control-plane
+!
+!
+!
+!
+!
+!
+alias configure sh do sh
+alias exec bri show ip int bri | exc unass
+alias exec id show int desc
+alias exec top sh proc cpu sorted | excl 0.00%__0.00%__0.00%
+alias exec c conf t
+alias exec diff sh archive config differences nvram:startup-config system:running-config
+alias exec desc sh int desc | ex down
+alias exec bgp sh run | s ^router bgp
+alias exec ospf sh run | s ^router ospf
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ 
+line vty 0 4
+ logging synchronous
+ login local
+ transport input telnet ssh
+!
+ntp server 10.1.1.1
+ntp server 10.1.2.2
+ntp server 10.2.2.2
+event manager applet COMM_ACC
+ event cli pattern ".*" sync no skip no occurs 1
+ action 1 syslog msg "User $_cli_username entered $_cli_msg on device $_cli_host "
+!
+end
+
+R1

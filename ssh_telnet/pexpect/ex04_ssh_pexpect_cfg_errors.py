@@ -32,10 +32,10 @@ def send_cfg_commands(host, username, password, enable_pass, cfg_commands):
                 ssh.expect(["config\S+#", "#"])
                 output = ssh.before
                 if "%" in output:
-                    print(
+                    logging.warning(
                         f'When executing the command "{cmd}" an error occurred'
                     )
-                    print(output)
+                    logging.info(output)
                 result += output + ssh.after
         return result.replace("\r\n", "\n")
     except pexpect.exceptions.TIMEOUT as error:
