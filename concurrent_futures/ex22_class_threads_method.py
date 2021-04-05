@@ -6,7 +6,8 @@ class ScanNetwork:
     def __init__(self, ip_list):
         self.ip_list = ip_list
 
-    def _ping_ip(self, ip):
+    @staticmethod
+    def _ping_ip(ip):
         result = subprocess.run(
             ["ping", "-c", "3", "-n", ip], stdout=subprocess.DEVNULL
         )
