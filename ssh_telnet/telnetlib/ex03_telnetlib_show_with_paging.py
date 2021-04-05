@@ -3,13 +3,15 @@ import time
 from pprint import pprint
 import re
 
+import yaml
+
 
 def to_bytes(line):
     return f"{line}\n".encode("utf-8")
 
 
-def send_show_command(ip, username, password, enable, command):
-    with telnetlib.Telnet(ip) as telnet:
+def send_show_command(host, username, password, enable_pass, command):
+    with telnetlib.Telnet(host) as telnet:
         telnet.read_until(b"Username")
         telnet.write(to_bytes(username))
         telnet.read_until(b"Password")
@@ -18,10 +20,8 @@ def send_show_command(ip, username, password, enable, command):
         if index == 0:
             telnet.write(b"enable\n")
             telnet.read_until(b"Password")
-            telnet.write(to_bytes(enable))
+            telnet.write(to_bytes(enable_pass))
             telnet.read_until(b"#", timeout=5)
-        time.sleep(3)
-        telnet.read_very_eager()
 
         telnet.write(to_bytes(command))
         result = ""
@@ -34,14 +34,13 @@ def send_show_command(ip, username, password, enable, command):
             if index in (1, -1):
                 break
             telnet.write(b" ")
-            time.sleep(1)
-            result.replace("\r\n", "\n")
 
-        return result
+        return result.replace("\r\n", "\n")
 
 
 if __name__ == "__main__":
-    devices = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    for ip in devices:
-        result = send_show_command(ip, "cisco", "cisco", "cisco", "sh run")
-        pprint(result, width=120)
+    with open("devices_telnetlib.yaml") as f:
+        devices = yaml.safe_load(f)
+        for device in devices:
+            out = send_show_command(**device, command="sh run")
+            pprint(out, width=120)

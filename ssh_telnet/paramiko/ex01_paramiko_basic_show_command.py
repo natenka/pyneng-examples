@@ -1,6 +1,8 @@
-import paramiko
 import time
 from pprint import pprint
+
+import paramiko
+import yaml
 
 
 def send_show_command(
@@ -31,7 +33,8 @@ def send_show_command(
 
 
 if __name__ == "__main__":
-    ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    for ip in ip_list:
-        out = send_show_command(ip, "cisco", "cisco", "cisco", "sh ip int br")
-        pprint(out, width=120)
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        for device in devices:
+            out = send_show_command(**device, command="sh ip int br")
+            pprint(out, width=120)

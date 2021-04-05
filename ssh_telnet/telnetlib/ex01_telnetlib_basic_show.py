@@ -2,19 +2,21 @@ import time
 import telnetlib
 from pprint import pprint
 
+import yaml
+
 
 def to_bytes(line):
     return f"{line}\n".encode("utf-8")
 
 
-def cisco_send_show_command(host, username, password, enable_pass, command):
+def send_show_command(host, username, password, enable_pass, command):
     with telnetlib.Telnet(host) as conn:
         conn.read_until(b"Username")
         conn.write(to_bytes(username))
         conn.read_until(b"Password")
         conn.write(to_bytes(password))
 
-        idx, _, _ = conn.expect([b">", b"#"])
+        idx, *trash = conn.expect([b">", b"#"])
         if idx == 0:
             conn.write(b"enable\n")
             conn.read_until(b"Password")
@@ -25,13 +27,12 @@ def cisco_send_show_command(host, username, password, enable_pass, command):
 
         conn.write(to_bytes(command))
         output = conn.read_until(b"#").decode("utf-8")
-        return output
+        return output.replace("\r\n", "\n")
 
 
 if __name__ == "__main__":
-    result = {}
-    ip_list = ["192.168.100.1", "192.168.100.2", "192.168.100.3"]
-    for ip in ip_list:
-        out = cisco_send_show_command(ip, "cisco", "cisco", "cisco", "sh ip int br")
-        result[ip] = out
-    pprint(result, width=120)
+    with open("devices_telnetlib.yaml") as f:
+        devices = yaml.safe_load(f)
+        for device in devices:
+            out = send_show_command(**device, command="sh ip int br")
+            pprint(out, width=120)
