@@ -1,7 +1,7 @@
 ## scrapli
 
 Here are examples only for synchronous transport options. Asynchronous
-examples are shown in [asyncio/asyncio_libs/scrapli/](https://github.com/natenka/pyneng-examples/tree/main/asyncio/asyncio_libs/scrapli)
+examples are shown in [asyncio/asyncio_libs/scrapli/](https://github.com/natenka/pyneng-examples/tree/main/asyncio/asyncio02_libs/scrapli)
 
 
 ## Links
