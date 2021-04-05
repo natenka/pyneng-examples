@@ -1,10 +1,12 @@
 
-* abc_class - абстрактные классы
 * basic_class - основы ООП
-* classmethod - примеры использования classmethod
-* inheritance - примеры использования наследования
 * magic_methods - специальные методы
-* mixin_class - Mixin'ы
-* namedtuple_class - Именованный кортеж
+* inheritance - примеры использования наследования
 * property - примеры использования property
 * staticmethod
+* classmethod - примеры использования classmethod
+* namedtuple_class - Именованный кортеж
+* data_classes
+* abc_class - абстрактные классы
+* mixin_class - Mixin'ы
+

@@ -41,53 +41,59 @@
 
 ## Progress (6/48)
 
+Пока что это просто примеры, которые скопированы из репозитория базового
+и advanced курса. По мере того как я перерабатываю примеры, я отмечаю их тут.
+Пока что пишу только код, потом будет стадия описания примеров, добавления
+docstring функциям.
+
+
 | Topic                                  | done  | docstrings |
 | -------------------------------------- | ----- | ---------- |
 | asyncio01_basics                       | | |
 | asyncio02_libs aiohttp_basics          | | |
-| asyncio02_libs asynssh         | | |
-| asyncio02_libs httpx         | | |
-| asyncio02_libs netdev         | | |
-| asyncio02_libs scrapli         | done | |
+| asyncio02_libs asynssh                 | | |
+| asyncio02_libs httpx                   | | |
+| asyncio02_libs netdev                  | | |
+| asyncio02_libs scrapli                 | done  | |
 | asyncio03_api async_decorators         | | |
 | asyncio03_api async_generators         | | |
-| asyncio03_api asyncio_loop         | | |
-| asyncio03_api asyncio_subprocess         | | |
-| asyncio03_api asyncio_wait         | | |
-| asyncio03_api class_with_async_methods         | | |
-| asyncio03_api run_in_thread         | | |
-| asyncio03_api semaphore         | | |
-| asyncio03_api task_class         | | |
-| cli_interface argparse          | | |
-| cli_interface click          | | |
-| cli_interface typer          | | |
-| concurrent_futures            | done | |
-| data_classes              | | |
-| decorator             | | |
-| generator             | | |
-| logging          | | |
-| misc cisco_config_diff          | | |
-| misc colored_dict          | | |
-| misc config_to_dict          | | |
-| misc explore_map          | | |
-| misc get_info_from_network          | | |
-| oop abc_class          | | |
-| oop basic_class          | | |
-| oop classmethod          | | |
-| oop data_classes          | | |
-| oop inheritance          | | |
-| oop magic_methods          | | |
-| oop mixin_class          | | |
-| oop namedtuple_class          | | |
-| oop property          | | |
-| oop staticmethod          | | |
-| python package            | | |
-| regex             | | |
-| ssh_telnet netmiko          | done | |
-| ssh_telnet paramiko          | done | |
-| ssh_telnet pexpect          | done | |
-| ssh_telnet scrapli          | done | |
-| ssh_telnet telnetlib          | | |
-| subprocess            | | |
-| textfsm           | | |
-| type_annotations              | | |
+| asyncio03_api asyncio_loop             | | |
+| asyncio03_api asyncio_subprocess       | | |
+| asyncio03_api asyncio_wait             | | |
+| asyncio03_api class_with_async_methods | | |
+| asyncio03_api run_in_thread            | | |
+| asyncio03_api semaphore                | | |
+| asyncio03_api task_class               | | |
+| cli_interface argparse                 | | |
+| cli_interface click                    | | |
+| cli_interface typer                    | | |
+| concurrent_futures                     | done  | |
+| data_classes                           | | |
+| decorator                              | | |
+| generator                              | | |
+| logging                                | | |
+| misc cisco_config_diff                 | | |
+| misc colored_dict                      | | |
+| misc config_to_dict                    | | |
+| misc explore_map                       | | |
+| misc get_info_from_network             | | |
+| oop abc_class                          | | |
+| oop basic_class                        | | |
+| oop classmethod                        | | |
+| oop data_classes                       | | |
+| oop inheritance                        | | |
+| oop magic_methods                      | | |
+| oop mixin_class                        | | |
+| oop namedtuple_class                   | | |
+| oop property                           | | |
+| oop staticmethod                       | | |
+| python package                         | | |
+| regex                                  | | |
+| ssh_telnet netmiko                     | done  | |
+| ssh_telnet paramiko                    | done  | |
+| ssh_telnet pexpect                     | done  | |
+| ssh_telnet scrapli                     | done  | |
+| ssh_telnet telnetlib                   | | |
+| subprocess                             | | |
+| textfsm                                | | |
+| type_annotations                       | | |
