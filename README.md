@@ -1,50 +1,45 @@
-# Репозиторий в процессе наполнения!
-
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Python code examples for Network Engineers
 
-> Не забывайте про поиск GitHub по репозиторию, так можно найти все примеры
-> по какому-то конкретному модулю.
+On the course/in the book, code examples are limited, since not all topics
+have been studied yet, but here I am trying to show examples without restrictions
+on topics, closer to how they will be used in life. The purpose of the repository
+is to show examples of using different modules, with more or less ready-made
+functions and classes that you can use in your scripts.
 
-На курсе/в книге примеры кода ограничены, так как не все темы еще
-изучены, а тут я пытаюсь показать примеры без ограничений по темам, ближе к тому
-как они будут использоваться в жизни.
-Цель репозитория показать примеры использования разных модулей, с более-менее готовыми
-функциями и классами, которые можно использовать в своих скриптах.
+> All examples are shown on Cisco IOS.
 
-> Все примеры показаны на Cisco IOS.
+Each directory has a README file with useful links on the topic.
 
-В каждом каталоге есть файл README с полезными ссылками по теме.
+## Python version
 
-## Версия Python
+All examples were written and tested for Python 3.8. Formatting - black.
 
-Все примеры писались и проверялись для Python 3.8. Форматирование black.
+## Topics
 
-## Темы
-
-* asyncio - основы asyncio, модули для подключения Telnet/ssh_telnet/HTTP(S), работа с asyncio
-* cli_interface - модули для создания интерфейса командной строки: click, typer, argparse
-* concurrent_futures - параллельное подключение к оборудованию с помощью модуля concurrent.futures
+* asyncio - asyncio basics, modules for Telnet/SSH/HTTP(S) connection, working with asyncio
+* cli_interface - modules for creating a command line interface: click, typer, argparse
+* concurrent_futures - concurrent connection to network devices using the concurrent.futures module
 * data_classes
 * decorator
 * generator
-* logging - модуль logging
-* misc - все что не попало в какую-то конкретную тему
-* oop - основы, специальные методы, property и т.д.
-* package - пример Python package
-* regex - примеры использования регулярных выражений для обработки вывода show команд
-* ssh_telnet_telnet - подключение Telnet/ssh_telnet
+* logging - the logging module
+* misc - everything that is not included in a particular topic
+* oop - basics, special methods, property, etc.
+* package - a Python package example
+* regex - examples of using regular expressions to process show command output
+* ssh_telnet_telnet - Telnet/SSH connection
 * subprocess
-* textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
-* type_annotations - примеры аннотации типов для разного кода
+* textfsm - examples of templates and using TextFSM in Python and modules netmiko, scrapli
+* type_annotations - examples of type annotations for different code
 
 ## Progress (8/48)
 
-Пока что это просто примеры, которые скопированы из репозитория базового
-и advanced курса. По мере того как я перерабатываю примеры, я отмечаю их тут.
-Пока что пишу только код, потом будет стадия описания примеров, добавления
-docstring функциям.
+For now, these are just examples copied from the basic and advanced course 
+repository. As I review and rewrite the examples, I mark them here. So far, 
+I am writing only code, then there will be a stage of describing examples,
+adding docstrings to functions.
 
 
 | Topic                                  | done  | docstrings |
