@@ -19,3 +19,4 @@ examples are shown in [asyncio/asyncio_libs/scrapli/](https://github.com/natenka
 ## ToDo
 
 * scrapli GenericDriver
+* send_interactive - commands with prompts
