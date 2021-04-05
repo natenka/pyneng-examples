@@ -39,7 +39,7 @@
 * textfsm - примеры шаблонов и использования TextFSM в Python и модулях netmiko, scrapli
 * type_annotations - примеры аннотации типов для разного кода
 
-## Progress (5/48)
+## Progress (6/48)
 
 | Topic                                  | done  | docstrings |
 | -------------------------------------- | ----- | ---------- |
@@ -61,7 +61,7 @@
 | cli_interface argparse          | | |
 | cli_interface click          | | |
 | cli_interface typer          | | |
-| concurrent_futures            | | |
+| concurrent_futures            | done | |
 | data_classes              | | |
 | decorator             | | |
 | generator             | | |
