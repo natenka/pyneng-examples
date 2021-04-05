@@ -1,7 +1,7 @@
 ## concurrent.futures
 
 Тут почти все примеры показаны на netmiko, но в каждой секции по модулям
-(netmiko, paramiko, pexpect, scrapli и telnetlib](https://github.com/natenka/pyneng-examples/tree/main/ssh_telnet)
+[netmiko, paramiko, pexpect, scrapli и telnetlib](https://github.com/natenka/pyneng-examples/tree/main/ssh_telnet)
 есть примеры подключения с помощью модуля в потоках.
 
 ## Links
