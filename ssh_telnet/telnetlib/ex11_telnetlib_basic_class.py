@@ -27,7 +27,7 @@ class CiscoTelnet:
         if idx == 0:
             self._write_line("enable")
             self.telnet.read_until(b"Password")
-            self._write_line(password)
+            self._write_line(enable_pass)
             self.telnet.read_until(b"#")
 
         self._write_line("terminal length 0")

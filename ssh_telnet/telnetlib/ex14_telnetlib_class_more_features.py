@@ -8,9 +8,17 @@ from textfsm import clitable
 import yaml
 
 
+class TelnetException(Exception):
+    """Base Telnet exception"""
+
+
+class TelnetAuthenticationException(TelnetException):
+    """Base Telnet exception"""
+
+
 class CiscoTelnet:
     def __init__(
-        self, host, username, password, enable_pass, encoding="utf-8", timeout=10
+        self, host, username, password, enable_pass, encoding="utf-8", timeout=5
     ):
         self.host = host
         self.username = username
@@ -18,21 +26,23 @@ class CiscoTelnet:
         self.enable_pass = enable_pass
         self.encoding = encoding
 
-        self.telnet = telnetlib.Telnet(host, timeout=timeout)
-        self.telnet.read_until(b"Username:")
-        self._write_line(username)
-        self.telnet.read_until(b"Password:")
-        self._write_line(password)
-
-        idx, *trash = self.telnet.expect([b">", b"#"])
-        if idx == 0:
-            self._write_line("enable")
-            self.telnet.read_until(b"Password")
+        try:
+            self.telnet = telnetlib.Telnet(host, timeout=timeout)
+            self.telnet.read_until(b"Username:")
+            self._write_line(username)
+            self.telnet.read_until(b"Password:")
             self._write_line(password)
+            idx, *trash = self.telnet.expect([b">", b"#"])
+            if idx == 0:
+                self._write_line("enable")
+                self.telnet.read_until(b"Password")
+                self._write_line(enable_pass)
+                idx, *trash = self.telnet.expect([b"#"])
+        except socket.timeout as error:
+            raise TelnetAuthenticationException(f"Authentication failed on {self.host}")
+        else:
+            self._write_line("terminal length 0")
             self.telnet.read_until(b"#")
-
-        self._write_line("terminal length 0")
-        self.telnet.read_until(b"#")
 
     def _write_line(self, line):
         self.telnet.write(line.encode(self.encoding) + b"\n")
@@ -107,6 +117,7 @@ if __name__ == "__main__":
     with open("devices_telnetlib.yaml") as f:
         devices = yaml.safe_load(f)
         r1 = devices[0]
+        r1["enable_pass"] = "sdfsdf"
         with CiscoTelnet(**r1) as r1_ssh:
             output = r1_ssh.send_command("sh ip int br", parse=False)
             pprint(output, width=120)
