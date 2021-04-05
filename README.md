@@ -3,7 +3,7 @@
 ## Python code examples for Network Engineers
 
 On the course/in the book, code examples are limited, since not all topics
-have been studied yet, but here I am trying to show examples without restrictions
+have been covered yet, so here I am trying to show examples without restrictions
 on topics, closer to how they will be used in life. The purpose of the repository
 is to show examples of using different modules, with more or less ready-made
 functions and classes that you can use in your scripts.
