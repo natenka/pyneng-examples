@@ -12,33 +12,25 @@ class ConnectAsyncSSH:
         self.connection_timeout = connection_timeout
 
     async def connect(self):
-        try:
-            self.ssh = await asyncio.wait_for(
-                asyncssh.connect(
-                    host=self.host,
-                    username=self.username,
-                    password=self.password,
-                    encryption_algs="+aes128-cbc,aes256-cbc",
-                ),
-                timeout=self.connection_timeout,
-            )
-        except asyncio.TimeoutError:
-            print(f"Connection Timeout on {host}")
-        except asyncssh.PermissionDenied:
-            print(f"Authentication Error on {host}")
-        except asyncssh.Error as error:
-            print(f"{error} on {host}")
-        else:
-            self.writer, self.reader, _ = await self.ssh.open_session(
-                term_type="Dumb", term_size=(200, 24)
-            )
-            await self._read_until(">")
-            self.writer.write("enable\n")
-            await self._read_until("Password")
-            self.writer.write(f"{self.enable_password}\n")
-            await self._read_until([">", "#"])
-            self.writer.write("terminal length 0\n")
-            await self._read_until()
+        self.ssh = await asyncio.wait_for(
+            asyncssh.connect(
+                host=self.host,
+                username=self.username,
+                password=self.password,
+                encryption_algs="+aes128-cbc,aes256-cbc",
+            ),
+            timeout=self.connection_timeout,
+        )
+        self.writer, self.reader, _ = await self.ssh.open_session(
+            term_type="Dumb", term_size=(200, 24)
+        )
+        await self._read_until(">")
+        self.writer.write("enable\n")
+        await self._read_until("Password")
+        self.writer.write(f"{self.enable_password}\n")
+        await self._read_until([">", "#"])
+        self.writer.write("terminal length 0\n")
+        await self._read_until()
 
     async def _read_until(self, prompt="#", timeout=3):
         try:
