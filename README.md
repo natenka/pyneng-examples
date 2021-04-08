@@ -1,4 +1,4 @@
-# Work in progress! 9/48 topics done
+# Work in progress! 10/48 topics done
 
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -36,7 +36,7 @@ All examples were written and tested for Python 3.8. Formatting - black.
 * textfsm - examples of templates and using TextFSM in Python and modules netmiko, scrapli
 * type_annotations - examples of type annotations for different code
 
-## Progress (9/48)
+## Progress (10/48)
 
 For now, these are just examples copied from the basic and advanced course 
 repository. As I review and rewrite the examples, I mark them here. So far, 
@@ -48,7 +48,7 @@ adding docstrings to functions.
 | -------------------------------------- | ----- | ---------- |
 | asyncio01_basics                       | | |
 | asyncio02_libs aiohttp_basics          | | |
-| asyncio02_libs asynssh                 | | |
+| asyncio02_libs asynssh                 | done  | |
 | asyncio02_libs httpx                   | | |
 | asyncio02_libs netdev                  | done  | |
 | asyncio02_libs scrapli                 | done  | |
