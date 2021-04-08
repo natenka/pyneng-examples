@@ -6,4 +6,4 @@ Current version of netdev 0.9.3 works only with asyncssh 1.18.0.
 
 * [netdev в книге Advanced Python для сетевых инженеров](https://advpyneng.readthedocs.io/ru/latest/book/17_async_libraries/netdev.html)
 * [netdev docs](https://netdev.readthedocs.io/en/stable/index.html)
-
+* [netdev repo](https://github.com/selfuryon/netdev)
