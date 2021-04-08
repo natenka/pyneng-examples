@@ -22,7 +22,6 @@ async def send_show(device, commands):
         print(error)
 
 
-
 async def send_command_to_devices(devices, commands):
     coroutines = [send_show(device, commands) for device in devices]
     result = await asyncio.gather(*coroutines)
