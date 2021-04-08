@@ -3,69 +3,99 @@ import asyncio
 import asyncssh
 
 
-async def read_until(reader, prompt="#", timeout=3, strict=True):
-    try:
-        return await asyncio.wait_for(reader.readuntil(prompt), timeout)
-    except asyncio.TimeoutError as error:
-        output = ""
-        while True:
-            try:
-                output += await asyncio.wait_for(reader.read(1000), 0.1)
-            except asyncio.TimeoutError as error:
-                break
-        message = (
-            f"TimeoutError while executing reader.readuntil('{prompt}')\n"
-            f"Last output from device:\n{output}"
-        )
-        if strict:
-            raise asyncio.TimeoutError(message)
+class ConnectAsyncSSH:
+    def __init__(self, host, username, password, enable_password, connection_timeout=5):
+        self.host = host
+        self.username = username
+        self.password = password
+        self.enable_password = enable_password
+        self.connection_timeout = connection_timeout
+
+    async def connect(self):
+        try:
+            self.ssh = await asyncio.wait_for(
+                asyncssh.connect(
+                    host=self.host,
+                    username=self.username,
+                    password=self.password,
+                    encryption_algs="+aes128-cbc,aes256-cbc",
+                ),
+                timeout=self.connection_timeout,
+            )
+        except asyncio.TimeoutError:
+            print(f"Connection Timeout on {host}")
+        except asyncssh.PermissionDenied:
+            print(f"Authentication Error on {host}")
+        except asyncssh.Error as error:
+            print(f"{error} on {host}")
         else:
-            print(message)
-            return output
+            self.writer, self.reader, _ = await self.ssh.open_session(
+                term_type="Dumb", term_size=(200, 24)
+            )
+            await self._read_until(">")
+            self.writer.write("enable\n")
+            await self._read_until("Password")
+            self.writer.write(f"{self.enable_password}\n")
+            await self._read_until([">", "#"])
+            self.writer.write("terminal length 0\n")
+            await self._read_until()
 
+    async def _read_until(self, prompt="#", timeout=3):
+        try:
+            return await asyncio.wait_for(self.reader.readuntil(prompt), timeout)
+        except asyncio.TimeoutError as error:
+            output = ""
+            while True:
+                try:
+                    output += await asyncio.wait_for(self.reader.read(1000), 0.1)
+                except asyncio.TimeoutError as error:
+                    break
+            message = (
+                f"TimeoutError while executing self.reader.readuntil('{prompt}')\n"
+                f"Last output from device:\n{output}"
+            )
+            raise asyncio.TimeoutError(message)
 
-async def send_show(
-    host, username, password, enable_password, command, connection_timeout=5
-):
-    try:
-        ssh = await asyncio.wait_for(
-            asyncssh.connect(
-                host=host,
-                username=username,
-                password=password,
-                encryption_algs="+aes128-cbc,aes256-cbc",
-            ),
-            timeout=connection_timeout,
-        )
-    except asyncio.TimeoutError:
-        print(f"Connection Timeout on {host}")
-    except asyncssh.PermissionDenied:
-        print(f"Authentication Error on {host}")
-    except asyncssh.Error as error:
-        print(f"{error} on {host}")
-    else:
-        writer, reader, _ = await ssh.open_session(
-            term_type="Dumb", term_size=(200, 24)
-        )
-        await read_until(reader, ">")
-        writer.write("enable\n")
-        await read_until(reader, "Password")
-        writer.write(f"{enable_password}\n")
-        await read_until(reader, [">", "#"])
-        writer.write("terminal length 0\n")
-        await read_until(reader)
-
-        writer.write(f"{command}\n")
-        output = await read_until(reader, "#")
+    async def send_show_command(self, command):
+        self.writer.write(command + "\n")
+        output = await self._read_until()
         return output
 
+    async def send_config_commands(self, commands):
+        cfg_output = ""
+        if type(commands) == str:
+            commands = ["conf t", commands, "end"]
+        else:
+            commands = ["conf t", *commands, "end"]
+        for cmd in commands:
+            self.writer.write(cmd + "\n")
+            cfg_output += await self._read_until()
+        return cfg_output
 
-if __name__ == "__main__":
+    async def close(self):
+        self.ssh.close()
+        await self.ssh.wait_closed()
+
+    async def __aenter__(self):
+        await self.connect()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
+
+
+async def main():
     r1 = {
         "host": "192.168.100.1",
         "username": "cisco",
         "password": "cisco",
         "enable_password": "cisco",
     }
-    result = asyncio.run(send_show(**r1, command="sh ip int br"))
-    print(result)
+    config_commands = ["logging buffered 20010", "ip http server"]
+    async with ConnectAsyncSSH(**r1) as ssh:
+        print(await ssh.send_show_command("sh ip int br"))
+        print(await ssh.send_config_commands(config_commands))
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
