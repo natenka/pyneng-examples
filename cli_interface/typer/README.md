@@ -9,7 +9,8 @@
 ## Examples
 
 * ex01_typer_basics_cli.py - basic argument, option, colors
-* ex02_arg_multiple_values.py - multiple arg values, colors
+* ex02_typer_arg_multiple_values.py - multiple arg values, colors
+* ex03_typer_param_type_file.py - parameter type FileText, FileTextWrite, progressbar, min, max
 
 
 ## Used in this section
