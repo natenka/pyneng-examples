@@ -11,6 +11,7 @@
 * ex01_typer_basics_cli.py - basic argument, option, colors
 * ex02_typer_arg_multiple_values.py - multiple arg values, colors
 * ex03_typer_param_type_file.py - parameter type FileText, FileTextWrite, progressbar, min, max
+* ex04_typer_options_params.py - required options, short options, prompt option value, hide input
 
 
 ## Used in this section
