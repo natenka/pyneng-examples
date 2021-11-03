@@ -1,0 +1,8 @@
+2021-11-03 08:12:20,502 ThreadPoolExecutor-4_0 scrapli.channel CRITICAL Timed out connecting to host
+2021-11-03 08:12:20,502 ThreadPoolExecutor-0_0 root INFO Error Timed out connecting to host on 192.168.100.14
+2021-11-03 08:12:23,076 ThreadPoolExecutor-62_0 scrapli.channel CRITICAL Timed out connecting to host
+2021-11-03 08:12:23,076 ThreadPoolExecutor-0_1 root INFO Error Timed out connecting to host on 192.168.100.14
+2021-11-03 08:12:26,253 ThreadPoolExecutor-170_0 scrapli.channel CRITICAL Timed out connecting to host
+2021-11-03 08:12:26,253 ThreadPoolExecutor-0_2 root INFO Error Timed out connecting to host on 192.168.100.14
+2021-11-03 08:12:30,733 ThreadPoolExecutor-277_0 scrapli.channel CRITICAL Timed out connecting to host
+2021-11-03 08:12:30,734 ThreadPoolExecutor-0_1 root INFO Error Timed out connecting to host on 192.168.100.14
