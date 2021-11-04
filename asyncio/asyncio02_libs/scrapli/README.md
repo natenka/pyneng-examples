@@ -18,3 +18,7 @@ examples are shown in [ssh_telnet/scrapli/](https://github.com/natenka/pyneng-ex
 ~/venv/pyneng-py3-8-0/lib/python3.8/site-packages/scrapli/transport/plugins/asyncssh/transport.py
  118 line: encryption_algs="+aes128-cbc,aes256-cbc",
 ```
+
+* [173](https://github.com/carlmontanari/scrapli/issues/173)
+* [docs](https://github.com/carlmontanari/scrapli/blob/master/docs/api_docs/transport/plugins/asyncssh.md)
+* [transport_options](https://github.com/carlmontanari/scrapli/search?q=transport_options)
