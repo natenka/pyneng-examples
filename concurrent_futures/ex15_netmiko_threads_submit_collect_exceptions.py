@@ -1,18 +1,11 @@
 from pprint import pprint
-import socket
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 import logging
 import random
 from itertools import repeat
 
-import yaml
-from netmiko import (
-    Netmiko,
-    NetmikoAuthenticationException,
-    NetmikoBaseException,
-    NetmikoTimeoutException,
-)
+from netmiko import Netmiko
 
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 logging.getLogger("netmiko").setLevel(logging.WARNING)
@@ -27,7 +20,7 @@ logging.basicConfig(
 
 def send_show(device_dict, command):
     device = device_dict.get("host")
-    logging.info(f">>> Подключаюсь {device}")
+    logging.info(f">>> Connect to {device}")
     with Netmiko(**device_dict) as conn:
         conn.enable()
         output = conn.send_command(command)
@@ -45,13 +38,61 @@ def send_cmd_to_all(devices, command, threads=10):
             if exception:
                 errors_on_devices[host] = exception
             else:
-                ip_out_dict[ip] = future.result()
+                ip_out_dict[host] = future.result()
     return ip_out_dict, errors_on_devices
 
 
 if __name__ == "__main__":
-    with open("devices.yaml") as f:
-        devices = yaml.safe_load(f)
+    devices = [
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.1",
+            "username": "cisco",
+            "password": "cisco",
+            "secret": "cisco",
+            "timeout": 5,
+        },
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.2",
+            "username": "cisco",
+            "password": "cisco",
+            "secret": "cisco",
+            "timeout": 5,
+        },
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.3",
+            "username": "cisco",
+            "password": "cisco",
+            "secret": "cisco",
+            "timeout": 5,
+        },
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.11",  # unreachable IP
+            "username": "cisco",
+            "password": "cisco",
+            "secret": "cisco",
+            "timeout": 5,
+        },
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.2",
+            "username": "cisco",
+            "password": "ciscowrong",  # wrong password
+            "secret": "cisco",
+            "timeout": 5,
+        },
+        {
+            "device_type": "cisco_ios",
+            "host": "192.168.100.3",
+            "username": "cisco",
+            "password": "cisco",
+            "secret": "ciscowrong",  # wrong secret
+            "timeout": 5,
+        },
+    ]
     cmd = "sh run | i hostname"
     correct, errors = send_cmd_to_all(devices, cmd)
     pprint(errors)
