@@ -1,0 +1,88 @@
+2022-08-08 06:45:16,113 ThreadPoolExecutor-0_0 __main__ INFO >>> Connecting to 192.168.100.1
+2022-08-08 06:45:16,119 ThreadPoolExecutor-0_1 __main__ INFO >>> Connecting to 192.168.100.2
+2022-08-08 06:45:16,121 ThreadPoolExecutor-0_2 __main__ INFO >>> Connecting to 192.168.100.3
+2022-08-08 06:45:16,125 ThreadPoolExecutor-0_3 __main__ INFO >>> Connecting to 192.168.100.11
+2022-08-08 06:45:16,128 ThreadPoolExecutor-0_4 __main__ INFO >>> Connecting to 192.168.100.2
+2022-08-08 06:45:16,130 ThreadPoolExecutor-0_5 __main__ INFO >>> Connecting to 192.168.100.3
+2022-08-08 06:45:19,478 ThreadPoolExecutor-0_4 __main__ DEBUG Error on 192.168.100.2 Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.100.2:22
+
+
+Authentication failed.
+Traceback (most recent call last):
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 1021, in establish_connection
+    self.remote_conn_pre.connect(**ssh_connect_params)
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/paramiko/client.py", line 435, in connect
+    self._auth(
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/paramiko/client.py", line 766, in _auth
+    raise saved_exception
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/paramiko/client.py", line 753, in _auth
+    self._transport.auth_password(username, password)
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/paramiko/transport.py", line 1564, in auth_password
+    return self.auth_handler.wait_for_response(my_event)
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/paramiko/auth_handler.py", line 259, in wait_for_response
+    raise e
+paramiko.ssh_exception.AuthenticationException: Authentication failed.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "ex16_netmiko_threads_submit_collect_exceptions_logging.py", line 35, in send_show
+    with Netmiko(**device_dict) as conn:
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/ssh_dispatcher.py", line 351, in ConnectHandler
+    return ConnectionClass(*args, **kwargs)
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 434, in __init__
+    self._open()
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 439, in _open
+    self.establish_connection()
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 1058, in establish_connection
+    raise NetmikoAuthenticationException(msg)
+netmiko.exceptions.NetmikoAuthenticationException: Authentication to device failed.
+
+Common causes of this problem are:
+1. Invalid username and password
+2. Incorrect SSH-key file
+3. Connecting to the wrong device
+
+Device settings: cisco_ios 192.168.100.11:22
+
+
+2022-08-08 06:45:37,634 ThreadPoolExecutor-0_5 __main__ DEBUG Error on 192.168.100.3
+
+Pattern not detected: 'R3' in output.
+
+Things you might try to fix this:
+1. Adjust the regex pattern to better identify the terminating string. Note, in
+many situations the pattern is automatically based on the network device's prompt.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
+Traceback (most recent call last):
+  File "ex16_netmiko_threads_submit_collect_exceptions_logging.py", line 36, in send_show
+    conn.enable()
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/cisco_base_connection.py", line 25, in enable
+    return super().enable(
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 1905, in enable
+    output += self.read_until_prompt()
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 734, in read_until_prompt
+    return self.read_until_pattern(
+  File "/home/user/venv/pyneng-py3-8-0/lib/python3.8/site-packages/netmiko/base_connection.py", line 651, in read_until_pattern
+    raise ReadTimeout(msg)
+netmiko.exceptions.ReadTimeout:
+
+Pattern not detected: 'R3' in output.
+
+Things you might try to fix this:
+1. Adjust the regex pattern to better identify the terminating string. Note, in
+many situations the pattern is automatically based on the network device's prompt.
+2. Increase the read_timeout to a larger value.
+
+You can also look at the Netmiko session_log or debug log for more information.
+
