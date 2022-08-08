@@ -9,7 +9,7 @@ def ping_ip(ip_address):
     False on failure:
     """
     param = "-n" if system_name().lower() == "windows" else "-c"
-    command = ["ping", param, "1", ip_address]
+    command = ["ping", param, "3", ip_address]
     reply = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     ip_is_reachable = reply.returncode == 0
     return ip_is_reachable
