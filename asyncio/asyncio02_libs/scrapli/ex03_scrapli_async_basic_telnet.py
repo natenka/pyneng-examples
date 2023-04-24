@@ -22,8 +22,8 @@ async def send_show(device, command):
             return result.result
     except ScrapliException as error:
         print(error, device["host"])
-    except asyncio.exceptions.TimeoutError:
-        print("asyncio.exceptions.TimeoutError", device["host"])
+    except asyncio.TimeoutError:
+        print("TimeoutError", device["host"])
 
 
 if __name__ == "__main__":
