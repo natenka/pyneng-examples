@@ -1,27 +1,37 @@
-- host: 192.168.100.1
+- host: 192.168.139.1
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
-  timeout_socket: 5
+  timeout_socket: 8
   timeout_transport: 10
   platform: cisco_iosxe
   transport: asyncssh
-- host: 192.168.100.2
+  transport_options: &transport_alg
+    asyncssh:
+      encryption_algs:
+      - aes256-cbc
+      - aes192-cbc
+      kex_algs:
+      - diffie-hellman-group14-sha1
+      - diffie-hellman-group1-sha1
+- host: 192.168.139.2
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
-  timeout_socket: 5
+  timeout_socket: 8
   timeout_transport: 10
   platform: cisco_iosxe
   transport: asyncssh
-- host: 192.168.100.3
+  transport_options: *transport_alg
+- host: 192.168.139.3
   auth_username: cisco
   auth_password: cisco
   auth_secondary: cisco
   auth_strict_key: false
-  timeout_socket: 5
+  timeout_socket: 8
   timeout_transport: 10
   platform: cisco_iosxe
   transport: asyncssh
+  transport_options: *transport_alg

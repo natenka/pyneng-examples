@@ -30,5 +30,6 @@ async def send_command_to_devices(devices, commands):
 if __name__ == "__main__":
     with open("devices_async.yaml") as f:
         devices = yaml.safe_load(f)
+    pprint(devices)
     result = asyncio.run(send_command_to_devices(devices, "sh ip int br"))
     pprint(result, width=120)

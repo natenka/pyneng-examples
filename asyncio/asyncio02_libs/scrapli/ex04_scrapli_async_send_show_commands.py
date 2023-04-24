@@ -3,7 +3,7 @@ from scrapli import AsyncScrapli
 from scrapli.exceptions import ScrapliException
 
 r1 = {
-    "host": "192.168.100.1",
+    "host": "192.168.139.1",
     "auth_username": "cisco",
     "auth_password": "cisco",
     "auth_secondary": "cisco",
@@ -12,6 +12,12 @@ r1 = {
     "timeout_transport": 10,  # timeout for ssh|telnet transport in seconds
     "platform": "cisco_iosxe",
     "transport": "asyncssh",
+    "transport_options": {
+        "asyncssh": {
+            "encryption_algs": ["aes256-cbc", "aes192-cbc"],
+            "kex_algs": ["diffie-hellman-group14-sha1", "diffie-hellman-group1-sha1"],
+        }
+    },
 }
 
 
